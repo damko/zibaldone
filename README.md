@@ -14,8 +14,6 @@ A reference is, well, a reference :-) It points to any markdown file living in a
 
 When reference is added to a book its content is downloaded and saved in local fragment which can be modified as you like.
 
-The fragments can be sorted using the graphic interface. By drag and dropping the fragment you change their order while by indenting them you set the paragraphs dependency.
-
 Through the graphic interface the fragments can be drag and drop to change their order sequence while the paragraphs dependency is set by indenting them.
 
 Both the order and the paragraphs dependency will be reflected in the index menu in the html book.
