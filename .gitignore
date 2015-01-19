@@ -2,6 +2,7 @@
 e2e-tests
 node_modules
 app/books/*
+!app/books/.gitkeep
 app/api/vendor
 app/components
 .bowerrc
