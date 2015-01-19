@@ -1,0 +1,133 @@
+div.references-tabs-container {
+    /*background-color: green;*/
+    !height: 100%;
+    !width: 100%;
+
+}
+
+/* VERTICAL TABS DISPLAYED ON THE LEFT */
+
+div.references-tabs-container > ul.nav-tabs {
+    float: left;
+    /*background-color: red;*/
+    width: 23%;
+    margin: 0px;
+    /*margin-right: -2px;*/
+    border: 0;
+    /*border-right: 1px solid #ddd;*/
+}
+
+div.references-tabs-container > ul.nav-tabs > li {
+    float: none;
+    border-color: #ddd;
+    border-right: red;
+}
+
+div.references-tabs-container > ul.nav-tabs > li > a {
+    margin-bottom: 3px;
+    margin-right: -1px;
+    border-color: #ddd #ddd #ddd #ddd;
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+
+}
+
+div.references-tabs-container > ul.nav-tabs > li > a:hover,
+div.references-tabs-container > ul.nav-tabs > li > a:focus {
+    background-color: #f8f8f8;
+    border-color: #ddd #ddd #ddd #ddd;
+}
+
+
+div.references-tabs-container > ul.nav-tabs > li.active > a,
+div.references-tabs-container > ul.nav-tabs > li.active > a:hover,
+div.references-tabs-container > ul.nav-tabs > li.active > a:focus {
+    background-color: white;
+    border-color: #ddd #fff #ddd #ddd;
+}
+
+
+/* TAB CONTENT DISPLAYED ON THE RIGHT OF THE VERTICAL TABS */
+
+div.references-tabs-container > div.tab-content {
+    padding: 0;
+    margin: 0;
+    /*display: block;*/
+}
+
+
+div.references {
+    margin: 0;
+    margin-left: 23%;
+    min-height: 322px;
+    background-color: white;
+    padding: 10px;
+    padding-top: 4px;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 0 4px 4px 4px;
+    -moz-border-radius: 0 4px 4px 4px;
+    border-radius: 0 4px 4px 4px;
+}
+
+ul.references {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* SINGLE ITEM SHOWN IN THE REFERENCES LIST */
+
+ul.references > li {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+ul.references > li > div.reference {
+    /*background-color: #f8f8f8;*/
+    margin: 0;
+    padding: 5px;
+    padding-bottom: 10px;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
+}
+
+div.reference > div.reference-info {
+    margin: 0;
+    padding: 0;
+}
+
+div.reference-info > table.reference-info th,
+div.reference-info > table.reference-info td {
+    font-size: 10px;
+    padding: 3px;
+    padding-right: 5px;
+}
+
+div.reference-info > table.reference-info th.path,
+div.reference-info > table.reference-info td.path {
+    font-size: 12px;
+}
+
+div.reference-buttons {
+    float: right;
+    clear: right;
+    margin: 0;
+    padding: 0;
+}
+
+div.reference-buttons > table.reference-buttons td {
+    padding: 3px;
+    padding-top: 0px;
+}
+
+/* FORM ON THE VERY RIGHT */
+
+form.formAddReference {
+    line-height: 40px;
+    padding: 4px;
+}

@@ -1,0 +1,149 @@
+div.fragments-tabs-container {
+    /*background-color: green;*/
+    !height: 100%;
+    !width: 100%;
+
+}
+
+/* VERTICAL TABS DISPLAYED ON THE LEFT */
+
+div.fragments-tabs-container > ul.nav-tabs {
+    float: left;
+    /*background-color: red;*/
+    width: 23%;
+    margin: 0px;
+    /*margin-right: -2px;*/
+    border: 0;
+    /*border-right: 1px solid #ddd;*/
+}
+
+div.fragments-tabs-container > ul.nav-tabs > li {
+    float: none;
+    border-color: #ddd;
+    border-right: red;
+}
+
+div.fragments-tabs-container > ul.nav-tabs > li > a {
+    margin-bottom: 3px;
+    margin-right: -1px;
+    border-color: #ddd #ddd #ddd #ddd;
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+
+}
+
+div.fragments-tabs-container > ul.nav-tabs > li > a:hover,
+div.fragments-tabs-container > ul.nav-tabs > li > a:focus {
+    background-color: #f8f8f8;
+    border-color: #ddd #ddd #ddd #ddd;
+}
+
+
+div.fragments-tabs-container > ul.nav-tabs > li.active > a,
+div.fragments-tabs-container > ul.nav-tabs > li.active > a:hover,
+div.fragments-tabs-container > ul.nav-tabs > li.active > a:focus {
+    background-color: white;
+    border-color: #ddd #fff #ddd #ddd;
+}
+
+
+/* TAB CONTENT DISPLAYED ON THE RIGHT OF THE VERTICAL TABS */
+
+div.fragments-tabs-container > div.tab-content {
+    padding: 0;
+    margin: 0;
+    /*display: block;*/
+}
+
+
+div.fragments {
+    margin: 0;
+    margin-left: 23%;
+    min-height: 322px;
+    background-color: white;
+    padding: 10px;
+    padding-top: 4px;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 0 4px 4px 4px;
+    -moz-border-radius: 0 4px 4px 4px;
+    border-radius: 0 4px 4px 4px;
+}
+
+ul.fragments {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* SINGLE ITEM SHOWN IN THE REFERENCES LIST */
+
+ul.fragments > li {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0;
+    cursor: move;
+}
+
+ul.fragments > li > div.fragment {
+    background-color: #f8f8f8;
+    margin: 0;
+    margin-right: 20px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
+}
+
+ul.fragments > li > div.child {
+    margin-left: 20px;
+    margin-right: 0px;
+}
+
+div.fragment > div.fragment-info {
+    margin: 0;
+    padding: 0;
+}
+
+div.fragment-info > table.fragment-info th,
+div.fragment-info > table.fragment-info td {
+    font-size: 12px;
+    padding: 3px;
+    padding-right: 5px;
+}
+
+div.fragment > div.fragment-buttons {
+    float: right;
+    margin: 0;
+    padding: 0;
+    clear: right;
+}
+
+div.fragment-buttons > table.fragment-buttons td {
+    padding: 3px;
+    padding-top: 0px;
+}
+
+/* PANEL ON THE VERY RIGHT */
+
+ul.fragments-panel-buttons {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+ul.fragments-panel-buttons li {
+  padding-bottom: 10px;
+}
+
+div.renderbox > p {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+}
+
+div.renderbox > p > span {
+    font-size: 11px;
+}

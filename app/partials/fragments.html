@@ -1,0 +1,146 @@
+<link href="assets/css/fragments.css" rel="stylesheet">
+<div class="row" >
+
+  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+
+    <div ng-if="!BooksAPI.results.books.length">
+        <p>Please, <a href="/books">add a book</a></p>
+    </div>
+
+    <tabset  vertical="true" justified="false" ng-if="BooksAPI.results.books.length" class="fragments-tabs-container">
+      <tab
+        ng-repeat="book in BooksAPI.results.books"
+        ng-attr-id="{{book.id}}"
+        heading="{{book.title}}"
+        active="book.active"
+        disabled="book.disabled"
+        ng-click="selectThisBook(book.id,$index)"
+        class="fragments-vertical-tabs"
+        >
+
+        <div class="fragments">
+
+          <ul class="fragments" ng-model="FragmentsAPI.results.fragments" ui-sortable="sortableOptions">
+
+            <li id="fragment-id-{{fragment.id}}"
+                class="fragment"
+                ng-repeat="fragment in FragmentsAPI.results.fragments" >
+
+              <div class="fragment" ng-class="{ child: fragment.child == '1'}">
+
+                <!-- <pre>{{fragment}}</pre> -->
+                <div class="fragment-buttons">
+                  <table class="fragment-buttons">
+                    <tr>
+                      <td>
+                        <button type="button" class="btn btn-xs btn-default" ng-click="setChildStatus(fragment, 0)" ng-if="fragment.child==1">
+                          <span class="glyphicon glyphicon-arrow-left"></span>
+                        </button>
+
+                        <button type="button" class="btn btn-xs btn-default" ng-click="setChildStatus(fragment, 1)" ng-if="fragment.child==0">
+                          <span class="glyphicon glyphicon-arrow-right"></span>
+                        </button>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <!-- DELETE BUTTON -->
+                        <button type="button" class="btn btn-xs btn-danger" ng-click="deleteFragment(fragment.id)">
+                          <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="fragment-info">
+                  <table class="fragment-info">
+                    <tr>
+                      <th>File name</th>
+                      <td colspan="3" >
+                        {{fragment.full_filename}}
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th>Menu label</th>
+                      <td colspan="3" ng-show="!editMenuLabel$index">
+                        {{fragment.menu_label}}
+                        <button
+                          type="button"
+                          class="btn btn-xs btn-default"
+                          ng-model="editMenuLabel$index"
+                          ng-show="!editMenuLabel$index"
+                          btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+                          <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                      </td>
+
+                      <td colspan="3" ng-show="editMenuLabel$index">
+                        <form name="editMenuLabelForm{{$index}}" class="form-inline edit-book-form">
+                          <div class="form-group">
+                            <input
+                                type="text"
+                                required
+                                name="label{{$index}}"
+                                ng-model="fragment.menu_label"
+                                ng-model-options="{}",
+                                ng-minlength="3"
+                                ng-maxlength="50"
+                                required
+                                style="line-height: 20px;" />
+
+                            <button
+                                type="submit"
+                                class="btn btn-xs btn-default"
+                                ng-click="editMenuLabel$index = updateFragment(fragment)">Update
+                            </button>
+                          </div>
+                        </form>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th>Type</th>
+                      <!-- TODO add here a link to the reference -->
+                      <td>{{fragment.type}}</td>
+                      <th>Last updated</th>
+                      <td>{{fragment.updated_at}}</td>
+                    </tr>
+                  </table>
+                </div>
+
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </tab>
+    </tabset>
+  </div>
+
+  <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+    <ul class="fragments-panel-buttons">
+      <li>
+        <button type="button" class="btn btn-default" ng-click="synchronizeDb()">
+            Refresh
+        </button>
+      </li>
+
+      <li>
+        <button type="button" class="btn btn-default" ng-click="renderBook()">
+            Render
+        </button>
+      </li>
+    </ul>
+
+    <div ng-if="BookAPI.results.book.render.filepath" class="thumbnail renderbox">
+      <p>
+        <a href="{{BookAPI.results.book.render.filepath}}" target="_blank">Last render</a><br/>
+        <span>Created at {{BookAPI.results.book.render.created}}</span>
+      </p>
+    </div>
+  </div>
+
+</div> <!-- /row -->

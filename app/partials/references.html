@@ -1,0 +1,214 @@
+<link href="assets/css/references.css" rel="stylesheet">
+<div class="row" >
+
+  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+
+    <div ng-if="!BooksAPI.results.books.length">
+        <p>Please, <a href="/books">add a book</a></p>
+    </div>
+
+    <tabset  vertical="true" justified="false" ng-if="BooksAPI.results.books.length" class="references-tabs-container">
+      <tab
+        ng-repeat="book in BooksAPI.results.books"
+        ng-attr-id="{{book.id}}"
+        heading="{{book.title}}"
+        active="book.active"
+        disabled="book.disabled"
+        ng-click="selectThisBook(book.id,$index)"
+        class="references-vertical-tabs"
+        >
+
+        <div class="references">
+
+          <span ng-if="!ReferencesAPI.results.references.length">Please add a reference</span>
+
+          <ul class="references" ng-if="ReferencesAPI.results.references.length">
+
+            <li class="reference" ng-repeat="reference in ReferencesAPI.results.references">
+
+              <div class="reference">
+
+                <a name="reference-{{reference.id}}"></a>
+
+                <div class="reference-buttons">
+                  <table class="reference-buttons">
+                    <tr>
+                      <td>
+<!-- TODO
+                        <button type="button" class="btn btn-xs btn-default">
+                          <span class="glyphicon glyphicon-refresh"></span>
+                        </button>
+ -->
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-xs btn-default" ng-if="reference.html_url">
+                          <a href="{{reference.html_url}}" target="_blank"><span class="glyphicon glyphicon-link"></span></a>
+                        </button>
+                        <button type="button" class="btn btn-xs btn-danger" ng-if="!reference.html_url">
+                          <span class="glyphicon glyphicon-exclamation-sign" role="alert"></span>
+                        </span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td></td>
+                      <td>
+                        <!-- DELETE BUTTON -->
+                        <button type="button" class="btn btn-xs btn-danger" ng-click="deleteReference(reference.id)">
+                          <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="reference-info">
+                  <table class="reference-info">
+                    <tr>
+                      <th class="path">Repo path</th>
+                      <td class="path" colspan="3">
+                        {{reference.repo_path}}
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th>Repo user</th>
+                      <td>{{reference.repo_user}}</td>
+                      <th>Repo name</th>
+                      <td>{{reference.repo_name}}</td>
+                    </tr>
+
+                    <tr ng-if="reference.sha">
+                      <th>SHA</th>
+                      <td colspan="3">{{reference.sha}}</td>
+                    </tr>
+
+                  </table>
+                </div>
+
+                <!-- <div style="clear: both;">&nbsp;</div> -->
+              </div>
+            </li>
+          </ul>
+        </div>
+      </tab>
+    </tabset>
+  </div> <!-- col -->
+
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+
+    <div class="thumbnail add-reference-form">
+
+        <h4>New reference</h4>
+
+        <form name="formAddReference" class="form-inline formAddReference">
+
+            <div class="form-group">
+              <label for="subref">Type</label>
+              <div class="btn-group">
+                  <label class="btn btn-primary" ng-model="newReference.subref" btn-radio="'githubReference'">github</label>
+                  <label class="btn btn-primary" ng-model="newReference.subref" btn-radio="'gitlabReference'">gitlab</label>
+              </div>
+            </div>
+
+            <div ng-if="newReference.subref != 'githubReference'">
+              <span>work in progress, sorry</span>
+            </div>
+            <div ng-if="newReference.subref == 'githubReference'">
+
+              <div class="form-group">
+                <label for="repo_user">User</label>
+                <input
+                    class="form-control"
+                    placeholder="Add the repository owner"
+                    type="text"
+                    name="repo_user"
+                    ng-model="newReference.repo_user"
+                    ng-minlength="1"
+                    ng-maxlength="255"
+                    required />
+
+                <div ng-messages="formAddReference.repo_user.$error">
+                  <div ng-message="minlength">The value entered is too short</div>
+                  <div ng-message="maxlength">The value entered is too long</div>
+                </div>
+              </div>
+  <!--
+              <div class="form-group reference">
+                <label for="repo_name">Name</label>
+                <input
+                    class="form-control"
+                    placeholder="Add the repository name"
+                    type="text"
+                    name="repo_name"
+                    ng-model="newReference.repo_name"
+                    ng-minlength="1"
+                    ng-maxlength="255"
+                    required />
+
+                <div ng-messages="formAddReference.repo_name.$error">
+                  <div ng-message="minlength">The value entered is too short</div>
+                  <div ng-message="maxlength">The value entered is too long</div>
+                </div>
+              </div>
+   -->
+              <div class="form-group">
+                <label for="repo_path">Path</label>
+                <input
+                    class="form-control"
+                    placeholder="Add the file path"
+                    type="text"
+                    name="repo_path"
+                    ng-model="newReference.repo_path"
+                    ng-minlength="1"
+                    ng-maxlength="255"
+                    required />
+
+                <div ng-messages="formAddReference.repo_path.$error">
+                  <div ng-message="minlength">The value entered is too short</div>
+                  <div ng-message="maxlength">The value entered is too long</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="sha">SHA</label>
+                <input
+                    class="form-control"
+                    placeholder="Add the file SHA"
+                    type="text"
+                    name="sha"
+                    ng-model="newReference.sha"
+                    ng-maxlength="40"/>
+
+                <div ng-messages="formAddReference.sha.$error">
+                  <div ng-message="maxlength">The value entered is too long</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="synchrony">Synchrony</label>
+                <div class="btn-group">
+                    <label class="btn btn-primary" ng-model="newReference.synchrony" btn-radio="true">true</label>
+                    <label class="btn btn-primary" ng-model="newReference.synchrony" btn-radio="false">false</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    ng-disabled="formAddBook.title.$invalid"
+                    ng-click="addReference()"
+                    >Add reference
+                </button>
+                <button type="button" class="btn btn-danger" ng-click="clearReferenceForm()">
+                    Clear Form
+                </button>
+              </div>
+
+            </div>
+        </form>
+    </div>
+  </div> <!-- col -->
+
+</div> <!-- /row -->

@@ -1,0 +1,112 @@
+/* .nav, .pagination, .carousel, .panel-title a { cursor: crosshair; } */
+
+blockquote {
+  font-size: 12px;
+  padding-top: 0;
+}
+
+nav.navbar {
+  margin-bottom: 5px;
+  background-color: white;
+}
+
+/* ALERTS BAR
+  http://plnkr.co/edit/HWi0FfDOsHeSOkcrRtN2?p=preview
+  http://stackoverflow.com/questions/22424877/how-can-i-fade-in-and-out-the-visibility-of-a-div-using-ng-show-with-angularjs-1
+*/
+
+div.alert-container {
+  min-height: 40px;
+  /*background-color: red;*/
+  margin-top: 5px;
+}
+
+.alert {
+  opacity: 1;
+  max-height: 30px;
+  /*line-height: 20px;*/
+  padding: 3px;
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.fade.ng-hide {
+  opacity: 0.4;
+}
+
+.fade.ng-hide-add {
+  transition: all linear 3000ms;
+}
+
+
+
+ul.booklist {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+ul.booklist li {
+  /*background-color: #f8f8f8;*/
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #ddd;
+}
+
+ul.booklist li {
+  line-height: 40px;
+  vertical-align: middle;
+  -webkit-border-radius: 4px 4px 4px 4px;
+     -moz-border-radius: 4px 4px 4px 4px;
+          border-radius: 4px 4px 4px 4px;
+}
+
+ul.booklist span {
+  vertical-align: middle;
+}
+
+
+
+div .add-book-form {
+  line-height: 50px;
+  padding-left: 5px;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px 4px 4px 4px;
+     -moz-border-radius: 4px 4px 4px 4px;
+          border-radius: 4px 4px 4px 4px;
+}
+
+.edit-book-form > input,
+.add-book-form > .form-inline input {
+  width: 75%;
+}
+
+.bookEditFormMessages {
+  transition:1s linear all;
+  line-height: 25px;
+  font-size: 12px;
+  color: red;
+  margin: 0;
+  margin-left: 3px;
+  padding: 0;
+  width: 75%;
+}
+
+div.bookEditFormMessages > div.ng-scope {
+  margin: 0;
+  padding: 0;
+}
+
+.bookEditFormMessages.ng-active {
+  // messages are visible
+}
+.bookEditFormMessages.ng-inactive {
+  // messages are hidden
+}
+
+form.inlineForm {
+  /*height: 20px;*/
+  line-height: 20px;
+}

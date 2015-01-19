@@ -1,0 +1,113 @@
+<link href="assets/css/app.css" rel="stylesheet">
+<div class="row" >
+
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+        <!-- if there are books -->
+        <div ng-if="BooksAPI.results.books.length">
+
+            <ul class="booklist">
+
+                <li ng-repeat="book in BooksAPI.results.books">
+
+                    <div  style="float: left; width: 80%;">
+
+                        <span ng-show="!showButton$index">{{book.title}}</span>
+
+                        <span ng-show="showButton$index">
+                            <form name="bookEditForm{{$index}}" class="form-inline edit-book-form">
+
+                                <label for="title{{$index}}"></label>
+
+                                <input
+                                    type="text"
+                                    required
+                                    placeholder="book title"
+                                    name="title{{$index}}"
+                                    ng-model="book.title"
+                                    ng-model-options="{}",
+                                    ng-minlength="3"
+                                    ng-maxlength="50"
+                                    required
+                                    style="line-height: 20px;" />
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-default"
+                                    ng-click="showButton$index = updateBook(book)">Update
+                                </button>
+
+
+                                <div ng-messages="bookEditForm{{$index}}.title{{$index}}.$error" class="bookEditFormMessages">
+                                  <div ng-message="required">Write a title</div>
+                                  <div ng-message="minlength">The title is too short</div>
+                                  <div ng-message="maxlength">The title is too long</div>
+                                </div>
+
+                            </form>
+                        </span>
+
+                    </div>
+
+
+                    <div style="float: right;">
+
+                        <!-- edit button -->
+                        <button type="button" class="btn btn-default" ng-model="showButton$index" ng-show="!showButton$index" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+
+                        <!-- refresh button -->
+                         <button type="button" class="btn btn-default"  ng-model="showButton$index" ng-show="showButton$index" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="refreshBookList()">
+                            <span class="glyphicon glyphicon-refresh"></span>
+                        </button>
+
+                        <!-- delete button -->
+                         <button type="button" class="btn btn-danger" ng-show="!showButton$index" ng-click="deleteBook(book.id)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </div>
+
+                    <div style="clear: both;"></div>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- if there are no books -->
+        <div ng-if="books.length==0">
+            <p style="margin-top: 60px;">Please, add a book</p>
+        </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="add-book-form">
+            <form name="formAddBook" class="form-inline">
+                <label for="title"></label>
+                <input
+                    class="form-control"
+                    placeholder="Add a book title"
+                    type="text"
+                    name="title"
+                    ng-model="title"
+                    ng-minlength="3"
+                    ng-maxlength="50"
+                    ng-required />
+                <button
+                    type="submit"
+                    class="btn btn-default"
+                    ng-disabled="formAddBook.title.$invalid"
+                    ng-click="addBook()"
+                    >Add book</button>
+
+                <div ng-messages="formAddBook.title.$error">
+                      <div ng-message="minlength">The title is too short</div>
+                      <div ng-message="maxlength">The title is too long</div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div> <!-- /row -->
