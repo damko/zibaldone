@@ -1,3 +1,15 @@
-*
 !.gitkeep
+e2e-tests
+node_modules
+app/books/*
+app/api/vendor
+app/components
+.bowerrc
+.jshintrc
+README_angularjs.md
+bower.json
+karma.conf.js
+npm-debug.log
+package.json
 *.sublime-project
+*.sublime-workspace
