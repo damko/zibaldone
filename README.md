@@ -1,6 +1,6 @@
+# Zibaldone
 
-##What Zibaldone does
-
+## What Zibaldone does
 
 Zibaldone uses chunks of markdown text, called **fragments**, to create html books.
 
@@ -19,7 +19,7 @@ Through the graphic interface the fragments can be drag and drop to change their
 Both the order and the paragraphs dependency will be reflected in the index menu in the html book.
 
 
-##A bit of history
+## A bit of history
 
 > Source: [Wikipedia](http://en.wikipedia.org/wiki/Commonplace_book#Zibaldone)
 
@@ -31,4 +31,126 @@ Both the order and the paragraphs dependency will be reflected in the index menu
 
 Well, I wonder if it's not the right time to start using it again ...
 After all we stand on the shoulders of giants, right? ;-)
+
+## Why Zibaldone
+
+TODO
+
+## Before your start
+
+**This is not a stable application! Use it with care**
+
+## Install
+
+Zibaldone, for now, can run only on your computer or virtual machine. If you don't know how to create a virtual machine you can read this ebook [Pragmatic Virtualization](https://leanpub.com/pragmatic_virtualization). It's free.
+
+### Prerequisites
+
+    * A web server
+    * PHP
+    * composer
+    * mysql
+
+### Procedure
+
+Clone the repo in your webroot
+
+    cd /var/www/
+    git clone git@github.com:damko/zibaldone.git
+
+Give read and write access to the user running the webserver (www-data on linux debian based distro) for the directory `app/books`
+
+    sudo chown www-data app/books
+
+Create a vhost for your webserver (this is an example for the Nginx webserver) and add the vhost name (in the example *zibaldone.derox* in /etc/vhost of your client (the pc in which you run the browser).
+
+    server {
+
+            listen          80;
+
+            #nginx configuration just for this vhost
+            client_max_body_size 10M;
+            client_header_timeout 30;
+            client_body_timeout 3m;
+            send_timeout 5m;
+
+            server_name  zibaldone.derox;
+            root        /var/www/zibaldone/ ;
+
+            access_log  /var/log/nginx/zibaldone--derox_access.log;
+
+            # Deny access to any files with a .php extension in the uploads directory
+            location ~* /(?:uploads|files)/.*\.php$ {
+                    deny all;
+            }
+
+            location / {
+                    index index.html;
+            }
+
+            location /api {
+                    index index.php;
+                    try_files $uri $uri/ /api/index.php?$args;
+            }
+
+
+
+            location = /favicon.ico {
+                    log_not_found off;
+                    access_log off;
+            }
+
+            location = /robots.txt {
+                    allow all;
+                    log_not_found off;
+                    access_log off;
+            }
+
+            # Make sure files with the following extensions do not get loaded by nginx because nginx would display the source code, and these files can contain PASSWORDS!
+            location ~* \.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl)$|^(\..*|Entries.*|Repository|Root|Tag|Template)$|\.php_ {
+                    deny all;
+            }
+
+            # Deny all attempts to access hidden files such as .htaccess, .htpasswd, .DS_Store (Mac).
+            location ~ /\. {
+                    deny all;
+                    access_log off;
+                    log_not_found off;
+            }
+
+            #location ~*  \.(jpg|jpeg|png|gif|css|js|ico)$ {
+            location ~*  \.(jpg|jpeg|png|gif|css|js)$ {
+                    expires max;
+                    log_not_found on;
+            }
+
+            location ~ \.php$ {
+                    #try_files $uri =404;
+                    try_files $uri $uri/ /api/index.php?$args;
+                    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                    fastcgi_index index.php;
+
+                    #this is for using unix socket
+                    #fastcgi_pass  unix:/var/run/php-fpm/wordpress.sock;
+
+                    #this is for http socket
+                    fastcgi_pass 127.0.0.1:9100;
+
+                    fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                    include       /etc/nginx/fastcgi_params;
+
+                    fastcgi_read_timeout 3m;
+            }
+    }
+
+Enable the webserver vhost and reload the webserver.
+
+Install the dependencies
+
+    cd zibaldone/app/api
+    composer install
+
+Create the *zibaldone* database in mysql and populate it using the `database.sql` file.
+
+Edit the file `app/api/models/zibaldone.php` and update it with the correct credentials.
 

@@ -144,7 +144,7 @@ class Book extends Eloquent {
         foreach ($contents as $item) {
             // Book.txt is the Leanpub specific file for index. It will not be treated as a fragment
             if ($item['path'] == 'Book.txt') {
-                break;
+                continue;
             }
             if ($item['type'] == 'file' && in_array($item['extension'], $allowed_exts)) {
                 $files[$item['path']] = $item;
