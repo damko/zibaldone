@@ -224,8 +224,8 @@ zibaldoneApp.controller('fragmentsCtrl', ['$scope', 'BooksAPI', 'BookAPI', 'Frag
         if (!promise.errors && promise.results.books[0]) {
 
             // if a cookie has been found
-            if ($scope.selectedBook.bookId) {
-
+            if (typeof $scope.selectedBook !== 'undefined' && $scope.selectedBook.bookId) {
+		//console.log('cookie found');
                 // and if the value stored in the cookie matches an existent book
                 angular.forEach(promise.results.books, function(book, index) {
                     if (book.id === $scope.selectedBook.bookId) {
@@ -234,15 +234,19 @@ zibaldoneApp.controller('fragmentsCtrl', ['$scope', 'BooksAPI', 'BookAPI', 'Frag
                 });
 
             } else {
-
+		//console.log('cookie not found');
                 // I select the 1st book in the booklist (default)
                 selectBook(promise.results.books[0].id, 0);
 
+		// I get the first book returned
+		$scope.BookAPI = BookAPI.get({bookId: promise.results.books[0].id});
             }
         }
     });
 
-    $scope.BookAPI = BookAPI.get({bookId: $scope.selectedBook.bookId});
+    if(typeof $scope.selectedBook !== 'undefined' && $scope.selectedBook.bookId){
+        $scope.BookAPI = BookAPI.get({bookId: $scope.selectedBook.bookId});
+    }
 
     // this function is activated when the user clicks on one of the vertical tabs
     $scope.selectThisBook = function (bookId,bookListIndex) {
