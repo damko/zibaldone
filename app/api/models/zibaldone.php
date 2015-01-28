@@ -228,6 +228,7 @@ class Zibaldone extends Slim {
         $html = $view->fetch('book_template.php');
 
         $book->store($html);
+        $book->createIndex();
     }
 
     public function listReferences($bookId)

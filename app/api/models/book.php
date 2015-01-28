@@ -60,6 +60,9 @@ class Book extends Eloquent {
             return false;
         }
 
+        // creates the images dir
+        $filesystem->createDir($this->dir . '/' . self::MANUSCRIPT_DIR . '/images');
+
         // adds some basic files
         $filesystem->put($this->dir . '/' . 'README.md', '');
         $filesystem->put($this->dir . '/' . 'license.md', '');
@@ -223,6 +226,34 @@ class Book extends Eloquent {
         }
 
         return $filesystem->put($this->getRenderFilename(), $html);
+    }
+
+    public function createIndex()
+    {
+        $filesystem = new Filesystem(new Adapter($this->getManuscriptPath()));
+
+        if ($filesystem->has('Book.txt')) {
+            $filesystem->delete('Book.txt');
+        }
+
+        $index = '';
+
+        foreach ($this->orderedFragments as $fragment) {
+
+            if (!$filesystem->has($fragment->full_filename)) {
+                break;
+            }
+
+            $line = $fragment->full_filename;
+            
+            if ($fragment->child) {
+                $line = '    ' . $line;
+            }
+
+            $index .= $line . "\n";
+        }
+
+        return $filesystem->write('Book.txt', $index);
     }
 
     public function getRenderInfo()
