@@ -20,6 +20,8 @@ Both the order and the paragraphs dependency will be reflected in the index menu
 
 You can see a demo in this [youtube video](http://youtu.be/lePHPhFQQwI).
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lePHPhFQQwI" frameborder="0" allowfullscreen></iframe>
+
 ## A bit of history
 
 > Source: [Wikipedia](http://en.wikipedia.org/wiki/Commonplace_book#Zibaldone)
@@ -35,7 +37,9 @@ After all we stand on the shoulders of giants, right? ;-)
 
 ## Why Zibaldone
 
-TODO
+Zibaldone started as a self tutorial to learn AngularJS but little by little it started having more and more sense so I thought to publish it. 
+
+I also decided to list this project among the [php-aid](http://php-aid.org) ones because I really would like to develop it in team. 
 
 ## Before your start
 
@@ -154,4 +158,6 @@ Install the dependencies
 Create the *zibaldone* database in mysql and populate it using the `database.sql` file.
 
 Edit the file `app/api/models/zibaldone.php` and update it with the correct credentials.
+
+Finally change the rights of the zibaldone directory to 777 so that the webserver can create files and folders.
 
