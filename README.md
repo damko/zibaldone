@@ -20,7 +20,6 @@ Both the order and the paragraphs dependency will be reflected in the index menu
 
 You can see a demo in this [youtube video](http://youtu.be/lePHPhFQQwI).
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/lePHPhFQQwI" frameborder="0" allowfullscreen></iframe>
 
 ## A bit of history
 
