@@ -18,6 +18,7 @@ Through the graphic interface the fragments can be drag and drop to change their
 
 Both the order and the paragraphs dependency will be reflected in the index menu in the html book.
 
+You can see a demo in this [youtube video](http://youtu.be/lePHPhFQQwI).
 
 ## A bit of history
 

@@ -5,6 +5,7 @@ app/books/*
 !app/books/.gitkeep
 app/api/vendor
 app/components
+video
 .bowerrc
 .jshintrc
 README_angularjs.md
