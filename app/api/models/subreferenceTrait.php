@@ -1,20 +1,21 @@
 <?php
+namespace Zibaldone\Api;
 
-trait subreferenceTrait {
+trait SubreferenceTrait {
 
     public function reference()
     {
-        return $this->belongsTo('Reference', 'reference_id', 'id');
+        return $this->belongsTo('Zibaldone\Api\Reference', 'reference_id', 'id');
     }
 
     public function download()
     {
-        return $this->hasOne('Download', 'reference_id', 'reference_id');
+        return $this->hasOne('Zibaldone\Api\Download', 'reference_id', 'reference_id');
     }
 
     public function fragment()
     {
-        return $this->hasOne('Fragment', 'reference_id', 'reference_id');
+        return $this->hasOne('Zibaldone\Api\Fragment', 'reference_id', 'reference_id');
     }
 
     public function isPresent($identifier)

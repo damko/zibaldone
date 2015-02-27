@@ -1,4 +1,5 @@
 <?php
+namespace Zibaldone\Api;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use League\Flysystem\Filesystem;
@@ -9,6 +10,8 @@ class Book extends Eloquent {
 
     const REPO = '../books';
     const MANUSCRIPT_DIR = 'manuscript';
+    const IMAGES_DIR = 'images';
+    const COVER_FILENAME = 'title_page.png';
     const RENDER_DIR = 'render';
     protected $database = 'zibaldone';
     protected $table = 'books';
@@ -16,12 +19,12 @@ class Book extends Eloquent {
 
     public function references()
     {
-        return $this->hasMany('Reference')->orderBy('created_at', 'asc');
+        return $this->hasMany('Zibaldone\Api\Reference')->orderBy('created_at', 'asc');
     }
 
     public function orderedFragments()
     {
-        return $this->hasMany('Fragment')->orderBy('position', 'asc');
+        return $this->hasMany('Zibaldone\Api\Fragment')->orderBy('position', 'asc');
     }
 
     public function getBookPath()
@@ -43,6 +46,17 @@ class Book extends Eloquent {
     {
         return $this->dir . '.html';
     }
+
+    public function getImagesPath()
+    {
+        return $this->getManuscriptPath() . '/' . self::IMAGES_DIR;
+    }
+    
+    public function getCoverFilename()
+    {
+        return self::COVER_FILENAME;
+    }
+
 
     public function save()
     {
@@ -165,7 +179,8 @@ class Book extends Eloquent {
         // looks for missing records in the db
         foreach ($files = $this->listFragmentFiles() as $key => $file) {
 
-            if (!Fragment::whereRaw('`full_filename`="' . $file['path'] . '"')->first()) {
+            $sql = '`book_id`=' . $this->id . ' AND `full_filename`="' . $file['path'] . '"';
+            if (!Fragment::whereRaw($sql)->first()) {
 
                 // not found -> adds the fragment
                 $fragment = new Fragment();
@@ -180,7 +195,8 @@ class Book extends Eloquent {
         }
 
         // deletes dead records in the db
-        Fragment::whereRaw('`full_filename` not in ("' . implode('","', array_keys($files)) . '")')->delete();
+        $sql = '`book_id`=' . $this->id . ' AND `full_filename` not in ("' . implode('","', array_keys($files)) . '")';
+        Fragment::whereRaw($sql)->delete();
     }
 
     public function fragmentsToHtml()
@@ -260,14 +276,19 @@ class Book extends Eloquent {
     {
         $filesystem = new Filesystem(new Adapter($this->getRenderPath()));
 
+        $return = array();
+
         if ($filesystem->has($this->getRenderFilename())) {
-            $return = array();
             $return['filepath'] = $this->getRenderPath() . '/' . $this->getRenderFilename();
-            $unixTime = DateTime::createFromFormat('U', $filesystem->getTimestamp($this->getRenderFilename()));
+            $unixTime = \DateTime::createFromFormat('U', $filesystem->getTimestamp($this->getRenderFilename()));
             $return['created'] = $unixTime->format('D, Y-m-d H:i:s');
-            return $return;
         }
 
-        return false;
+        $filesystem = new Filesystem(new Adapter($this->getImagesPath()));
+        if ($filesystem->has($this->getCoverFilename())) {
+            $return['coverpath'] = $this->getImagesPath() . '/' . $this->getCoverFilename();
+        }
+        
+        return count($return) ? $return : false;
     }
 }

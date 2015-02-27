@@ -3,6 +3,8 @@ e2e-tests
 node_modules
 app/books/*
 !app/books/.gitkeep
+app/articles/*
+!app/articles/.gitkeep
 app/api/vendor
 app/components
 video

@@ -28,8 +28,8 @@ $zibaldone->get('/book/:bookId/:action', function ($bookId, $action) use ($zibal
         break;
 
         default:
-            $this->httpStatus = 400;
-            $this->output(array(41));
+            $zibaldone->httpStatus = 400;
+            $zibaldone->output(array(41));
         break;
     }
     $zibaldone->output();
@@ -68,7 +68,7 @@ $zibaldone->post('/reference', function () use ($zibaldone) {
 
 $zibaldone->delete('/reference/:referenceId', function ($referenceId) use ($zibaldone) {
     $zibaldone->deleteReference($referenceId);
-    $this->output();
+    $zibaldone->output();
 });
 
 
@@ -86,8 +86,8 @@ $zibaldone->get('/fragments/:bookId/:action', function ($bookId, $action) use ($
         break;
 
         default:
-            $this->httpStatus = 400;
-            $this->output(array(41));
+            $zibaldone->httpStatus = 400;
+            $zibaldone->output(array(41));
         break;
     }
 
@@ -101,8 +101,8 @@ $zibaldone->post('/fragments/:bookId/:action', function ($bookId, $action) use (
         break;
 
         default:
-            $this->httpStatus = 404;
-            $this->output(array(41));
+            $zibaldone->httpStatus = 404;
+            $zibaldone->output(array(41));
         break;
     }
 
@@ -128,8 +128,8 @@ $zibaldone->put('/fragment/:fragmentId/:action', function ($fragmentId, $action)
         break;
 
         default:
-            $this->httpStatus = 400;
-            $this->output(array(41));
+            $zibaldone->httpStatus = 400;
+            $zibaldone->output(array(41));
         break;
     }
 
@@ -140,5 +140,46 @@ $zibaldone->delete('/fragment/:fragmentId', function ($fragmentId) use ($zibaldo
     $zibaldone->deleteFragment($fragmentId);
     $zibaldone->output();
 });
+
+
+// ARTICLES COLLECTION
+$zibaldone->get('/articles', function () use ($zibaldone) {
+    $zibaldone->listArticles();
+    $zibaldone->output();
+});
+
+// SINGLE ARTICLE
+$zibaldone->get('/article/:articleId', function ($articleId) use ($zibaldone) {
+    $zibaldone->getArticle($articleId);
+    $zibaldone->output();
+});
+
+/*$zibaldone->get('/book/:bookId/:action', function ($bookId, $action) use ($zibaldone) {
+    switch ($action) {
+        case 'render':
+            $zibaldone->renderBook($bookId);
+        break;
+
+        default:
+            $zibaldone->httpStatus = 400;
+            $zibaldone->output(array(41));
+        break;
+    }
+    $zibaldone->output();
+});*/
+
+
+$zibaldone->get('/sync_articles', function () use ($zibaldone) {
+    $zibaldone->syncArticles();
+    $zibaldone->output();
+});
+
+
+$zibaldone->get('/tags', function () use ($zibaldone) {
+    $zibaldone->listTags();
+    $zibaldone->output();
+});
+
+
 
 $zibaldone->run();

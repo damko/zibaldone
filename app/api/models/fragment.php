@@ -1,4 +1,5 @@
 <?php
+namespace Zibaldone\Api;
 
 use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local as Adapter;
@@ -16,12 +17,12 @@ class Fragment extends Eloquent{
 
     public function book()
     {
-        return $this->belongsTo('Book', 'book_id');
+        return $this->belongsTo('Zibaldone\Api\Book', 'book_id');
     }
 
     public function reference()
     {
-        return $this->belongsTo('Reference', 'reference_id');
+        return $this->belongsTo('Zibaldone\Api\Reference', 'reference_id');
     }
 
     /**

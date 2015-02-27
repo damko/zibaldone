@@ -1,4 +1,5 @@
 <?php
+namespace Zibaldone\Api;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
@@ -38,22 +39,25 @@ class Reference extends Eloquent {
 
     public function book()
     {
-        return $this->belongsTo('Book', 'book_id', 'id');
+        return $this->belongsTo('Zibaldone\Api\Book', 'book_id', 'id');
     }
 
     public function subreference()
     {
-        return $this->hasOne($this->subref, 'reference_id', 'id');
+        //$class = 'Zibaldone\Api\GithubReference';
+        //$class .= '\' . $this->subref;
+        $class = 'Zibaldone\Api\\'. $this->subref;
+        return $this->hasOne($class, 'reference_id', 'id');
     }
 
     public function download()
     {
-        return $this->hasOne('Download', 'reference_id', 'id');
+        return $this->hasOne('Zibaldone\Api\Download', 'reference_id', 'id');
     }
 
     public function fragment()
     {
-        return $this->hasOne('Fragment', 'reference_id', 'id');
+        return $this->hasOne('Zibaldone\Api\Fragment', 'reference_id', 'id');
     }
 
     public static function makeId(array $input)
@@ -67,7 +71,7 @@ class Reference extends Eloquent {
     }
 
     // checks the input
-    protected function checkBeforeAdd(stdClass $newRef)
+    protected function checkBeforeAdd(\stdClass $newRef)
     {
         $mandatory_attributes = array('book_id', 'subref');
         foreach ($mandatory_attributes as $attribute) {
@@ -80,7 +84,7 @@ class Reference extends Eloquent {
 
     protected function checkRepoType()
     {
-        $possible_subrefs = array('githubReference'); //TODO add here 'httpReference' 'gitlabReference'
+        $possible_subrefs = array('GithubReference'); //TODO add here 'httpReference' 'gitlabReference'
 
         if (!in_array($this->subref, $possible_subrefs)) {
             return false;
@@ -89,7 +93,7 @@ class Reference extends Eloquent {
         return true;
     }
 
-    public function add(stdClass $newRef)
+    public function add(\stdClass $newRef)
     {
         if (! $this->checkBeforeAdd($newRef)) {
             return false;
@@ -102,8 +106,10 @@ class Reference extends Eloquent {
         if (! $this->checkRepoType()) {
             return false;
         }
+        
+        $class = 'Zibaldone\Api\\'. $this->subref;
 
-        $subref = new $this->subref;
+        $subref = new $class;
         if (! $this->id = $subref->add($newRef)) {
             return false;
         }

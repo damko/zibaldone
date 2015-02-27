@@ -42,6 +42,25 @@ zibaldoneApp.factory('customInterceptor', [ 'Alerts', function(Alerts){
     }
 }]);
 
+zibaldoneApp.factory('TagsAPI', ['$resource', 'API_URL', function($resource, API_URL){
+    return $resource(API_URL + '/tags', {}, {
+        list: { method: 'GET'},
+    });
+}]);
+
+
+zibaldoneApp.factory('ArticlesAPI', ['$resource', 'API_URL', function($resource, API_URL){
+    return $resource(API_URL + '/articles', {}, {
+        list: { method: 'GET'},
+    });
+}]);
+
+zibaldoneApp.factory('ArticleAPI', ['$resource', 'API_URL', function($resource, API_URL){
+    return $resource(API_URL + '/article/:articleId', {}, {
+        get: { method: 'GET'},
+    });
+}]);
+
 zibaldoneApp.factory('BooksAPI', ['$resource', 'API_URL', function($resource, API_URL){
     return $resource(API_URL + '/books', {}, {
         list: { method: 'GET'},

@@ -1,4 +1,5 @@
 <?php
+namespace Zibaldone\Api;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
@@ -12,7 +13,7 @@ class GithubReference extends Eloquent {
     public $timestamps = false;
 
 
-    public function add(stdClass $newRef)
+    public function add(\stdClass $newRef)
     {
         // checks the input
         $mandatory_attributes = array('book_id','subref', 'repo_user', 'repo_path');

@@ -1,4 +1,5 @@
 <?php
+namespace Zibaldone\Api;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use League\Flysystem\Filesystem;
@@ -12,12 +13,12 @@ class Download extends Eloquent {
 
     public function reference()
     {
-        return $this->belongsTo('Reference', 'reference_id');
+        return $this->belongsTo('Zibaldone\Api\Reference', 'reference_id');
     }
 
     public function fragment()
     {
-        return $this->hasOne('Fragment', 'reference_id', 'reference_id');
+        return $this->hasOne('Zibaldone\Api\Fragment', 'reference_id', 'reference_id');
     }
 
     /**

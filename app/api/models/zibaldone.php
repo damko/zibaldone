@@ -1,17 +1,49 @@
 <?php
 
+spl_autoload_register(function ($class) {
+
+    // project-specific namespace prefix
+    $prefix = 'Zibaldone\\Api\\';
+
+    // base directory for the namespace prefix
+    $base_dir = __DIR__ . '/';
+
+    // does the class use the namespace prefix?
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        // no, move to the next registered autoloader
+        return;
+    }
+
+    // get the relative class name
+    $relative_class = lcfirst(substr($class, $len));
+
+    // replace the namespace prefix with the base directory, replace namespace
+    // separators with directory separators in the relative class name, append
+    // with .php
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
+    // if the file exists, require it
+    if (file_exists($file)) {
+        require $file;
+    }
+});
+
 use \Slim\Slim as Slim;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local as Adapter;
 
-require_once 'models/book.php';
-require_once 'models/fragment.php';
-require_once 'models/reference.php';
-require_once 'models/subreferenceTrait.php';
-require_once 'models/githubReference.php';
-require_once 'models/download.php';
-require_once 'models/downloader.php';
+use Zibaldone\Api\RelatedTag as RelatedTag;
+use Zibaldone\Api\Tag as Tag;
+use Zibaldone\Api\Book as Book;
+use Zibaldone\Api\Fragment as Fragment;
+use Zibaldone\Api\subreferenceTrait as SubreferenceTrait;
+use Zibaldone\Api\GithubReference as GithubReference;
+use Zibaldone\Api\Reference as Reference;
+use Zibaldone\Api\Download as Download;
+use Zibaldone\Api\Downloader as Downloader;
+use Zibaldone\Api\Article as Article;
 
 class Zibaldone extends Slim {
 
@@ -47,6 +79,7 @@ class Zibaldone extends Slim {
         $this->error_messages[51] = 'I can not delete the resource';
         $this->error_messages[52] = 'I can not update the resource';
         $this->error_messages[53] = 'I can not download the resource';
+        $this->error_messages[54] = 'I can not synchronize the resource';
 
         $this->error_messages[60] = 'The resource already exists';
 
@@ -100,7 +133,14 @@ class Zibaldone extends Slim {
 
     public function listBooks()
     {
-        $this->results['books'] = Book::all()->toArray();
+        //$this->results['books'] = Book::all()->toArray();
+
+        $this->results['books'] = array();
+
+        foreach (Book::all() as $book) {
+            $book->render = $book->getRenderInfo();    
+            $this->results['books'][] = $book->toArray();
+        }
     }
 
     public function getBook($bookId)
@@ -421,4 +461,38 @@ class Zibaldone extends Slim {
         $this->results['fragment'] = $fragment->toArray();
     }
 
+
+    public function listArticles()
+    {
+        $this->results['articles'] = Article::list_all();
+    }
+
+    public function getArticle($articleId)
+    {
+        if (! is_numeric($articleId)) {
+            $this->httpStatus = 400;
+            $this->output(array(40));
+        }
+
+        if ( ! $article = Article::find($articleId)) {
+            $this->httpStatus = 400;
+            $this->output(array(30));
+        }
+
+        $this->results['article'] = $article->toHtml($article->getContent());
+    }
+
+
+    public function syncArticles()
+    {
+        if (! Article::syncDbWithFs()) {
+            $this->httpStatus = 500;
+            $this->output(array(54));            
+        }
+    }
+
+    public function listTags()
+    {
+        $this->results['tags'] = Tag::listTags();
+    }
 }

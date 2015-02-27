@@ -34,7 +34,62 @@ zibaldoneApp.controller('AlertCtrl', ['$scope', 'Alerts', '$interval',
     }
 ]);
 
-zibaldoneApp.controller('booksCtrl', ['$scope', 'BooksAPI', 'BookAPI', 'Alerts', function($scope, BooksAPI, BookAPI, Alerts) {
+zibaldoneApp.controller('ModalArticleCtrl', function($scope, $modalInstance, $sce, articleContent, articleTitle) {
+
+    $scope.articleTitle = articleTitle;
+    $scope.articleContent = $sce.trustAsHtml(articleContent);
+
+    $scope.close = function() {
+        $modalInstance.dismiss('cancel');
+    };
+
+});
+
+zibaldoneApp.controller('articlesCtrl', ['$scope', 'ArticlesAPI', 'ArticleAPI', 'Alerts', '$modal', function($scope, ArticlesAPI, ArticleAPI, Alerts, $modal) {
+
+    $scope.ArticlesAPI = ArticlesAPI.list();
+    $scope.articleTitle = '';
+    $scope.articleContent = '';
+
+    $scope.open = function (size){
+
+        var modalInstance = $modal.open({
+            templateUrl: '/partials/article_modal.html',
+            controller: 'ModalArticleCtrl',
+            size: size,
+            resolve: {
+                articleTitle: function(){
+                    return $scope.articleTitle;
+                },
+                articleContent: function(){
+                    return $scope.articleContent;
+                }
+            }
+        });
+    };
+
+    $scope.showArticle = function(articleId, title) {
+        
+        $scope.articleTitle = title;
+
+        ArticleAPI.get({articleId: articleId}, function(response){
+            $scope.articleContent = response.results.article;
+            $scope.open('lg');
+        });
+
+    }
+
+}]);
+
+zibaldoneApp.controller('tagsCtrl', ['$scope', 'TagsAPI', 'Alerts', function($scope, TagsAPI, Alerts) {
+
+    $scope.TagsAPI = TagsAPI.list();
+
+}]);
+
+
+
+zibaldoneApp.controller('booksCtrl', ['$scope', 'BooksAPI', 'BookAPI', 'Alerts', '$modal', function($scope, BooksAPI, BookAPI, Alerts, $modal) {
 
     $scope.BooksAPI = BooksAPI.list();
 
@@ -84,6 +139,13 @@ zibaldoneApp.controller('booksCtrl', ['$scope', 'BooksAPI', 'BookAPI', 'Alerts',
         });
     }
 
+    //TODO I need to improve this whole thing
+    $scope.showBook = function (template){
+        var modalInstance = $modal.open({
+            templateUrl: template,
+            size: 'lg',
+        });
+    };
 }]);
 
 
@@ -113,7 +175,7 @@ zibaldoneApp.controller('referencesCtrl', ['$scope', 'BooksAPI', 'ReferencesAPI'
     // Defaults
     $scope.ReferencesAPI = {};
     $scope.newReference = {}; // this is the New Reference form object
-    $scope.newReference.subref = 'githubReference';
+    $scope.newReference.subref = 'GithubReference';
     $scope.newReference.synchrony = false;
 
     // tries to retrieve a previously stored cookie
@@ -182,7 +244,7 @@ zibaldoneApp.controller('referencesCtrl', ['$scope', 'BooksAPI', 'ReferencesAPI'
 
     $scope.clearReferenceForm = function() {
         $scope.newReference = {};
-        $scope.newReference.subref = 'githubReference';
+        $scope.newReference.subref = 'GithubReference';
         $scope.newReference.synchrony = false;
         //$scope.newReference.book_id = $scope.selectedBook.id;
     }
@@ -225,7 +287,7 @@ zibaldoneApp.controller('fragmentsCtrl', ['$scope', 'BooksAPI', 'BookAPI', 'Frag
 
             // if a cookie has been found
             if (typeof $scope.selectedBook !== 'undefined' && $scope.selectedBook.bookId) {
-		//console.log('cookie found');
+		
                 // and if the value stored in the cookie matches an existent book
                 angular.forEach(promise.results.books, function(book, index) {
                     if (book.id === $scope.selectedBook.bookId) {
@@ -234,7 +296,7 @@ zibaldoneApp.controller('fragmentsCtrl', ['$scope', 'BooksAPI', 'BookAPI', 'Frag
                 });
 
             } else {
-		//console.log('cookie not found');
+		
                 // I select the 1st book in the booklist (default)
                 selectBook(promise.results.books[0].id, 0);
 

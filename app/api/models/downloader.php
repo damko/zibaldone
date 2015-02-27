@@ -1,4 +1,5 @@
 <?php
+namespace Zibaldone\Api;
 
 class Downloader {
 

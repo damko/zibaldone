@@ -1,4 +1,4 @@
-<link href="assets/css/references.css" rel="stylesheet">
+<link href="../assets/css/references.css" rel="stylesheet">
 <div class="row" >
 
   <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -106,15 +106,15 @@
             <div class="form-group">
               <label for="subref">Type</label>
               <div class="btn-group">
-                  <label class="btn btn-primary" ng-model="newReference.subref" btn-radio="'githubReference'">github</label>
-                  <label class="btn btn-primary" ng-model="newReference.subref" btn-radio="'gitlabReference'">gitlab</label>
+                  <label class="btn btn-primary" ng-model="newReference.subref" btn-radio="'GithubReference'">github</label>
+                  <label class="btn btn-primary" ng-model="newReference.subref" btn-radio="'GitlabReference'">gitlab</label>
               </div>
             </div>
 
-            <div ng-if="newReference.subref != 'githubReference'">
+            <div ng-if="newReference.subref != 'GithubReference'">
               <span>work in progress, sorry</span>
             </div>
-            <div ng-if="newReference.subref == 'githubReference'">
+            <div ng-if="newReference.subref == 'GithubReference'">
 
               <div class="form-group">
                 <label for="repo_user">User</label>

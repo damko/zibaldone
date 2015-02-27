@@ -1,0 +1,15 @@
+<!-- Tags -->
+<div class="wrapper style2">
+    <div class="title">Tags</div>
+    <div id="highlights" class="container">
+        <div class="row" ng-controller="tagsCtrl">
+            <h3>Work in progress</h3>
+            <ul class="tags">
+                <li ng-repeat="(tag_name, number) in TagsAPI.results.tags">
+                    {{tag_name}}<span>({{number}})</span> &bull;&nbsp;
+                </li>
+            </ul>  
+        </div>
+    </div>
+</div>
+

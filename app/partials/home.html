@@ -1,70 +1,93 @@
+<!-- Books -->
+<div class="wrapper style2">
 
-<section class="row" >
+<div class="title">Books</div>
 
-    <section class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-        <article>
-            <h2>What Zibaldone does</h2>
+    <div id="main" class="container">                        
 
-            <p>
-                Zibaldone uses chunks of markdown text, called <strong>fragments</strong>, to create html books.
-            </p>
+        <div class="row 150%" ng-controller="booksCtrl">
 
-            <p>
-                Zibaldone can handle multiple books and each can contain any number of fragments.<br/>
-            </p>
+            <div class="3u" ng-repeat="book in BooksAPI.results.books" style="min-height: 400px;">
+                <section class="box">
 
-            <p>
-                Zibaldone is compatible with <a href="http://leanpub.com" target="_blank">Leanpub</a> and
-                this means that the books can be automatically rendered as ebooks (pdf, epub, mobi) and that you can sell, publish, share them right away.
-            </p>
+                    <header>
+                        <h3>{{book.title}}</h3>
+                    </header>
+                    
+                    <div ng-if="book.render.filepath">
 
-            <p>
-                The fragments are alway text files living on your computer but they can be originated from remote <strong>references</strong>.
-            </p>
-            <p>
-                A reference is, well, a reference :-) It points to any markdown file living in an external resource (for now only Github).
-            </p>
+                        <a href="{{book.render.filepath}}" class="image featured" target="_blank">
+                            <span ng-if="book.render.coverpath">
+                                <img ng-src="{{book.render.coverpath}}" alt="" />
+                            </span>
+                            <span ng-if="!book.render.coverpath">
+                                <img src="assets/images/default_cover.png" alt="" />
+                            </span>
+                        </a>
+                                                    
+                        <p class="render_string">Last render: {{book.render.created}}</p>
+<!-- 
+                        <button type="button" class="button style3" ng-click="showBook(book.render.filepath)">Show</button>
+                        <a class="button style3" href="{{book.render.filepath}}" target="_blank">New tab</a> 
+-->
 
-            <p>
-                When reference is added to a book its content is downloaded and saved in local fragment which can be modified as you like.
-            </p>
+                    </div>
 
-            <p>
-                The fragments can be sorted using the graphic interface. By drag and dropping the fragment you change their order while by indenting them you set the paragraphs dependency.
-            </p>
+                    <div ng-if="! book.render.filepath">
+                        <img class="image featured" src="assets/images/default_cover.png" alt="" />
+                        <p class="render_string">No render for this book yet</p>
+                    </div>
 
-            <p>
-                Both the order and the paragraphs dependency will be reflected in the index menu in the html book.
-            </p>
+                </section>
+            </div>
 
-        </article>
+            <!-- if there are no books -->
+            <div ng-if="books.length==0">
+                <p style="margin-top: 60px;">No books :-(</p>
+            </div>
 
-    </section>
+        </div>
+    </div>
 
-    <article class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-        <h2>A bit of history</h2>
+</div>
 
-        <blockquote>
 
-            <p style="text-align: right;">
-                <i >Source: <a href="http://en.wikipedia.org/wiki/Commonplace_book#Zibaldone" target="_blank">Wikipedia</a></i>
-            </p>
+<!-- Articles -->
+<div class="block-spacer"></div>
 
-            <p>During the course of the 15th century, the Italian peninsula was the site of a development of two new forms of book production: the deluxe registry book and the zibaldone (or hodgepodge book). What differentiated these two forms was their language of composition: a vernacular. Giovanni Rucellai, the compiler of one of the most sophisticated examples of the genre, defined it as a "salad of many herbs.
-            </p>
+<div class="wrapper style2">
+    <div class="title">Articles</div>
+    <div id="highlights" class="container">
+        <div class="row 150%" ng-controller="articlesCtrl">
 
-            <p>Zibaldone were always paper codices of small or medium format – never the large desk copies of registry books or other display texts. [..] Devotional, technical, documentary and literary texts appear side-by-side in no discernible order.
-            </p>
 
-            <p>
-            By the 17th century, commonplacing had become a recognized practice that was formally taught to college students in such institutions as Oxford. John Locke appended his indexing scheme for commonplace books to a printing of his An Essay Concerning Human Understanding. [..] <b>“Commonplacing” persisted as a popular study technique until the early 20th century</b>.
-            </p>
+            <div class="3u" ng-repeat="article in ArticlesAPI.results.articles" style="min-height: 340px;">
+                <section class="box">
 
-        </blockquote>
+                    <a href="#" ng-click="showArticle(article.id, article.title)">
+                        <h3 class="article">{{article.title | limitTo: 18}} {{article.title.length > 18 ? '[..]' : ''}}</h3>                    
+                    </a>
+                    
+                    <div ng-if="article.thumbnail">
+                        <a href="#" ng-click="showArticle(article.id, article.title)">
+                            <img class="image article" ng-src="{{article.thumbnail}}" alt="" />
+                        </a>
+                    </div>
 
-        <p>
-            Well, I wonder if it's not the right time to start using it again ... <br/>
-            After all we stand on the shoulders of giants, right? ;-)
-        </p>
-    </article>
-</section>
+                    <div ng-if="!article.thumbnail">
+                        <a href="#" ng-click="showArticle(article.id, article.title)">
+                            <img class="image article" src="assets/images/default_article.png" alt="" />
+                        </a>
+                    </div>
+
+                    <ul class="tag" ng-if="article.tags.length">    
+                        <li ng-repeat="tag in article.tags">{{tag.name}}</li>
+                    </ul>
+
+                    <!-- <button type="button" class="button style3" ng-click="showArticle(article.id, article.title)">Show</button> -->
+
+                </section>        
+            </div>  
+        </div>
+    </div>
+</div>
