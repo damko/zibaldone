@@ -55,6 +55,11 @@ Zibaldone, for now, can run only on your computer or virtual machine. If you don
     * composer
     * mysql
 
+If don't have these requirements and you are running a Debian like operating system you can install these packages
+
+    apt-get install nginx nginx-common nginx-core php5 php5-cli php5-common php5-curl php5-fpm php5-json php5-mcrypt php5-mysql
+
+
 ### Procedure
 
 Clone the repo in your webroot
@@ -154,9 +159,23 @@ Install the dependencies
     cd zibaldone/app/api
     composer install
 
-Create the *zibaldone* database in mysql and populate it using the `database.sql` file.
+Create the *zibaldone* database in mysql 
+
+    mysql -uroot
+    create database zibaldone
+    quit
+
+and populate it using the `database.sql` file.
+
+    mysql -uroot zibaldone < database.sql
+
+Create a mysql user and grant full rights to the zibaldone database
 
 Edit the file `app/api/models/zibaldone.php` and update it with the correct credentials.
+
+Edit the file `zibaldone/app/assets/js/app.js` and replace the hostname with yours
+
+    zibaldoneApp.constant('API_URL', 'http://zibaldone.derox/api');
 
 Finally change the rights of the zibaldone directory to 777 so that the webserver can create files and folders.
 
