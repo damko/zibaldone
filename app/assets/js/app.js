@@ -12,7 +12,7 @@ var zibaldoneApp = angular.module('zibaldoneApp', [
   'ngCookies',
 ]);
 
-zibaldoneApp.constant('API_URL', 'http://zibaldone.derox/api');
+zibaldoneApp.constant('API_URL', '/api');
 
 // TODO
 // zibaldoneApp.config(['$resourceProvider', function($resourceProvider) {
