@@ -101,7 +101,25 @@ class Article extends Eloquent {
     	$content = preg_replace('#/\*.+?\*/#s', '', $content); // Remove comments and meta
 
     	$converter = new CommonMarkConverter();
-        return $converter->convertToHtml($content);
+        	$html = $converter->convertToHtml($content);
+        	$style = '
+<style>
+ul {
+    list-style: disc;
+    margin-left: 1.3em;
+}
+ol {
+    list-style: decimal !important;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+    margin-left: 2em;
+}
+ol > li {
+    margin-bottom: 0.2em;
+}
+</style>
+        	';
+        	return $style . $html;
     }
 
     public function save() {
