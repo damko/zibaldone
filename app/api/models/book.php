@@ -4,7 +4,7 @@ namespace Zibaldone\Api;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local as Adapter;
-use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\CommonMarkConverter as MarkdownParser;
 
 class Book extends Eloquent {
 
@@ -220,7 +220,7 @@ class Book extends Eloquent {
             $item['child'] = $fragment->child;
             $item['menu_label'] = $fragment->menu_label;
             // TODO the converter should be switched accordingly to the reference or fragment type
-            $converter = new CommonMarkConverter();
+            $converter = new MarkdownParser();
             $item['content'] = $converter->convertToHtml($content);
 
             if ($fragment->reference_id) {

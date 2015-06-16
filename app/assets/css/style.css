@@ -204,44 +204,61 @@
         table
         {
             width: 100%;
+            border: 1px solid #c8c8c8;
+        }
+
+        th {
+            font-weight: bold;
+            background-color: #c8c8c8;
+        }
+
+        tr {
+            border: 1px solid #c8c8c8;
+        }
+
+        tr:nth-child(even) {background: #e8e8e8;}
+        
+        td {
+            border: 1px solid #c8c8c8;
+            vertical-align: middle;
+        }
+
+        table.default
+        {
+            width: 100%;
         }
         
-            table.default
+            table.default tbody tr:nth-child(2n+2)
             {
-                width: 100%;
+                background: #f4f4f4;
             }
             
-                table.default tbody tr:nth-child(2n+2)
-                {
-                    background: #f4f4f4;
-                }
-                
-                table.default td
-                {
-                    padding: 0.5em 1em 0.5em 1em;
-                }
-                
-                table.default th
-                {
-                    text-align: left;
-                    font-weight: 400;
-                    padding: 0.5em 1em 0.5em 1em;
-                }
+            table.default td
+            {
+                padding: 0.5em 1em 0.5em 1em;
+            }
             
-                table.default thead
-                {
-                    background: #484d55;
-                    color: #fff;
-                }
-                
-                table.default tfoot
-                {
-                    background: #eee;
-                }
-                
-                table.default tbody
-                {
-                }
+            table.default th
+            {
+                text-align: left;
+                font-weight: 400;
+                padding: 0.5em 1em 0.5em 1em;
+            }
+        
+            table.default thead
+            {
+                background: #484d55;
+                color: #fff;
+            }
+            
+            table.default tfoot
+            {
+                background: #eee;
+            }
+            
+            table.default tbody
+            {
+            }
 
     /* Form */
 

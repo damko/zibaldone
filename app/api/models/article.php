@@ -7,7 +7,8 @@ use Zibaldone\Api\RelatedTag as RelatedTag;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local as Adapter;
-use League\CommonMark\CommonMarkConverter;
+use Parsedown as MarkdownParser;
+//use League\CommonMark\CommonMarkConverter as MarkdownParser;
 
 class Article extends Eloquent {
 
@@ -122,10 +123,12 @@ class Article extends Eloquent {
 
     public function toHtml($content){
 
-    	$content = preg_replace('#/\*.+?\*/#s', '', $content); // Remove comments and meta
+        // Removes the comments and meta
+    	$content = preg_replace('#/\*.+?\*/#s', '', $content); 
 
-    	$converter = new CommonMarkConverter();
-        	$html = $converter->convertToHtml($content);
+    	$converter = new MarkdownParser();
+        	//$html = $converter->convertToHtml($content);
+            $html = $converter->text($content);
         	$style = '
 <style>
 ul {
