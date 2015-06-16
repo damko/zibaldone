@@ -23,6 +23,7 @@ div.alert-container {
 
 .alert {
   opacity: 1;
+  
   max-height: 30px;
   /*line-height: 20px;*/
   padding: 3px;

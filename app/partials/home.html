@@ -62,10 +62,11 @@
 
 
             <div class="3u" ng-repeat="article in ArticlesAPI.results.articles" style="min-height: 340px;">
-                <section class="box">
+                <section class="box article">
 
                     <a href="#" ng-click="showArticle(article.id, article.title)">
-                        <h3 class="article">{{article.title | limitTo: 18}} {{article.title.length > 18 ? '[..]' : ''}}</h3>                    
+                        <!-- <h3 class="article">{{article.title | limitTo: 18}} {{article.title.length > 18 ? '[..]' : ''}}</h3> -->
+                        <h3 class="article">{{article.title}}</h3>
                     </a>
                     
                     <div ng-if="article.thumbnail">
