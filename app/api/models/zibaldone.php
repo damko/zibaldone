@@ -480,6 +480,7 @@ class Zibaldone extends Slim {
         }
 
         $this->results['article'] = $article->toHtml($article->getContent());
+        $this->results['tags'] = $article->getTags(); //$article->tags->toArray();
     }
 
 
@@ -487,7 +488,7 @@ class Zibaldone extends Slim {
     {
         if (! Article::syncDbWithFs()) {
             $this->httpStatus = 500;
-            $this->output(array(54));            
+            $this->output(array(54));
         }
     }
 

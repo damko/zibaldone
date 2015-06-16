@@ -111,8 +111,9 @@ foreach ($this->data['fragments'] as $key => $fragment) {
             echo '<div class="anchor">';
                 echo '<a name="fragment-' . $fragment['id']. '"></a>';
                 if (isset($fragment['origin'])) {
-                    $txt = 'The fragment below was taken from <a href=\'' . $fragment['origin'] . '\' target=\'_blank\'>here</a>';
+                    $txt = 'Original fragment <a href=\'' . $fragment['origin'] . '\' target=\'_blank\'>here</a>';
                     echo '<button type="button" class="btn btn-info" data-toggle="popover" title="Additional info" data-content="'. $txt .'">Info</button>';
+                    echo '<span style="margin-left: 10px; font-size: 9px;">' . $fragment['origin'] . '</span>';
                 }
             echo '</div>';
         echo '</div>';

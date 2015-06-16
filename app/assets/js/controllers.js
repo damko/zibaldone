@@ -34,10 +34,11 @@ zibaldoneApp.controller('AlertCtrl', ['$scope', 'Alerts', '$interval',
     }
 ]);
 
-zibaldoneApp.controller('ModalArticleCtrl', function($scope, $modalInstance, $sce, articleContent, articleTitle) {
+zibaldoneApp.controller('ModalArticleCtrl', function($scope, $modalInstance, $sce, articleContent, articleTitle, articleTags) {
 
     $scope.articleTitle = articleTitle;
     $scope.articleContent = $sce.trustAsHtml(articleContent);
+    $scope.articleTags = articleTags;
 
     $scope.close = function() {
         $modalInstance.dismiss('cancel');
@@ -50,8 +51,11 @@ zibaldoneApp.controller('articlesCtrl', ['$scope', 'ArticlesAPI', 'ArticleAPI', 
     $scope.ArticlesAPI = ArticlesAPI.list();
     $scope.articleTitle = '';
     $scope.articleContent = '';
+    $scope.articleTags = [];
 
     $scope.open = function (size){
+
+        console.log($scope.articleTags);
 
         var modalInstance = $modal.open({
             templateUrl: '/partials/article_modal.html',
@@ -63,7 +67,10 @@ zibaldoneApp.controller('articlesCtrl', ['$scope', 'ArticlesAPI', 'ArticleAPI', 
                 },
                 articleContent: function(){
                     return $scope.articleContent;
-                }
+                },
+                articleTags: function(){
+                    return $scope.articleTags;
+                },
             }
         });
     };
@@ -73,7 +80,10 @@ zibaldoneApp.controller('articlesCtrl', ['$scope', 'ArticlesAPI', 'ArticleAPI', 
         $scope.articleTitle = title;
 
         ArticleAPI.get({articleId: articleId}, function(response){
+            // console.log('Tags');
+            // console.log(response.results.tags);
             $scope.articleContent = response.results.article;
+            $scope.articleTags = response.results.tags;
             $scope.open('lg');
         });
 

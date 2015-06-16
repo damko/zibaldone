@@ -19,6 +19,14 @@
 	</style>
 </head>
 <body>
+    <div ng-if="articleTags.length" style="margin-top: 15px;">
+        <ul class="tag" >
+            <li ng-repeat="tag in articleTags">{{tag.name}}</li>
+        </ul></h3>
+    </div>
+
+    <div ng-if="articleTags.length==0">No tags</div>
+
 	<div class="modal-body" ng-bind-html="articleContent">
 	</div>
 	<div class="modal-footer">

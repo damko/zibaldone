@@ -19,9 +19,19 @@ class Article extends Eloquent {
 
     public static function syncDbWithFs()
     {
+        // drops the relationships article - tags
+        RelatedTag::truncate();
 
-    	//drops the articles
-    	self::truncate();
+        // drops the articles
+        self::truncate();
+
+        // drops the tags
+        Tag::truncate();
+
+        // fake tag
+        $tag = new Tag();
+        $tag->name = 'no-tag';
+        $tag->save();
 
         $allowed_exts = array('txt', 'md');
 
@@ -49,9 +59,18 @@ class Article extends Eloquent {
 	            	return false;
 	            }
 
+                if (count($meta['tags']) == 0) {
+                    $relatedTag = new relatedTag();
+                    $relatedTag->tag_id = 1;
+                    $relatedTag->article_id = $article->id;
+                    $relatedTag->save();
+                    continue;
+                }
+
 	            // updates the tags list
 	            foreach ($meta['tags'] as $tag_name) {
 		            $tag = new Tag();
+                    //$clean_tag_name = strtolower(preg_replace('/[^A-Za-z0-9\-_ ]/', '', trim($tag_name)));
 		            $tag->name = $tag_name;
 		            if (! $tag->save()) {
 		            	return false;
@@ -69,7 +88,7 @@ class Article extends Eloquent {
 		            		return false;
 		            	}
 		            }
-	            }		            
+	            }
 
 	        }
 
@@ -80,7 +99,12 @@ class Article extends Eloquent {
 
     public function tags()
     {
-        return $this->belongsToMany('Zibaldone\Api\Tag', 'related_tags', 'article_id', 'id');
+        return $this->belongsToMany('Zibaldone\Api\Tag', 'related_tags', 'article_id', 'tag_id');
+    }
+
+    public function getTags()
+    {
+        return $this->load('tags')->toArray()['tags'];
     }
 
     public static function list_all() 
