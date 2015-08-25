@@ -18,3 +18,7 @@ package.json
 *.sublime-project
 *.sublime-workspace
 extra/
+books/*
+!books/.gitkeep
+articles/*
+!articles/.gitkeep
