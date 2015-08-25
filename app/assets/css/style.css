@@ -16,7 +16,8 @@
     {
         font-family: 'Source Sans Pro', sans-serif;
         font-weight: 400;
-        color: #919499;
+        /*color: #919499;*/
+        color: #999;
     }
 
         body.is-loading *
