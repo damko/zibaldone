@@ -12,11 +12,10 @@
 /* Basic                                                                         */
 /*********************************************************************************/
 
-    body, input, textarea, select, p
+    body, input, textarea, select
     {
         font-family: 'Source Sans Pro', sans-serif;
         font-weight: 400;
-        /*color: #919499;*/
         color: #999;
     }
 
@@ -113,6 +112,7 @@
     p, ul, ol, dl, table, blockquote, form
     {
         margin-bottom: 2em;
+        color: #444;
     }
     
     /* dam */
