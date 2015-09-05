@@ -221,7 +221,8 @@ class Book extends Eloquent {
             $item['menu_label'] = $fragment->menu_label;
             // TODO the converter should be switched accordingly to the reference or fragment type
             $converter = new MarkdownParser();
-            $item['content'] = $converter->convertToHtml($content);
+            //$item['content'] = $converter->convertToHtml($content);
+            $item['content'] = $converter->text($content);
 
             if ($fragment->reference_id) {
                 $item['origin'] = Reference::find($fragment->reference_id)->html_url;
