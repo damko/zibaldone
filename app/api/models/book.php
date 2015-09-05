@@ -4,7 +4,8 @@ namespace Zibaldone\Api;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local as Adapter;
-use League\CommonMark\CommonMarkConverter as MarkdownParser;
+use Parsedown as MarkdownParser;
+//use League\CommonMark\CommonMarkConverter as MarkdownParser;
 
 class Book extends Eloquent {
 
@@ -199,7 +200,7 @@ class Book extends Eloquent {
         Fragment::whereRaw($sql)->delete();
     }
 
-    public function fragmentsToHtml()
+    public function toHtml()
     {
         $filesystem = new Filesystem(new Adapter($this->getManuscriptPath()));
 
@@ -221,7 +222,9 @@ class Book extends Eloquent {
             $item['menu_label'] = $fragment->menu_label;
             // TODO the converter should be switched accordingly to the reference or fragment type
             $converter = new MarkdownParser();
+            //TODO delme
             //$item['content'] = $converter->convertToHtml($content);
+            //$item['content'] = '<pre>' . $converter->text($content) . '</pre>';
             $item['content'] = $converter->text($content);
 
             if ($fragment->reference_id) {
@@ -234,6 +237,13 @@ class Book extends Eloquent {
 
     }
 
+    // here for historical reasons
+    // TODO remove on refactoring
+    public function fragmentsToHtml()
+    {
+        return $this->toHtml();
+    }
+    
     public function store($html)
     {
         $filesystem = new Filesystem(new Adapter($this->getRenderPath()));
