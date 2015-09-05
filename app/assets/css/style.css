@@ -164,9 +164,16 @@
         margin-right: 3px;
     }
 
-    ul.tag li {
+    ul.tagslist {
+        line-height: 25px;
+        margin: 0;
+        margin-bottom: 8px;
+    }
+
+    ul.tagslist li {
         display: inline; 
         white-space: nowrap;
+        margin: 0;
         margin-right: 5px;
         color: black;
         background-color: #e8e8e8;
@@ -188,7 +195,7 @@
         -webkit-border-radius: 4px 4px 4px 4px;
          -moz-border-radius: 4px 4px 4px 4px;
               border-radius: 4px 4px 4px 4px;
-        height: 280px;
+        height: 300px;
     }
 
     section.article a {

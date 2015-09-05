@@ -5,15 +5,14 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local as Adapter;
 use Parsedown as MarkdownParser;
-//use League\CommonMark\CommonMarkConverter as MarkdownParser;
 
 class Book extends Eloquent {
 
-    const REPO = '../books';
-    const MANUSCRIPT_DIR = 'manuscript';
-    const IMAGES_DIR = 'images';
-    const COVER_FILENAME = 'title_page.png';
-    const RENDER_DIR = 'render';
+    // const BOOKS_REPO = '../books';
+    // const BOOKS_MANUSCRIPT_DIR = 'manuscript';
+    // const BOOKS_IMAGES_DIR = 'images';
+    // const BOOKS_COVER_FILENAME = 'title_page.png';
+    // const BOOKS_RENDER_DIR = 'render';
     protected $database = 'zibaldone';
     protected $table = 'books';
     protected $connection = 'mysql';
@@ -30,17 +29,17 @@ class Book extends Eloquent {
 
     public function getBookPath()
     {
-        return self::REPO . '/' . $this->dir ;
+        return BOOKS_REPO . '/' . $this->dir ;
     }
 
     public function getManuscriptPath()
     {
-        return self::REPO . '/' . $this->dir . '/' . self::MANUSCRIPT_DIR;
+        return BOOKS_REPO . '/' . $this->dir . '/' . BOOKS_MANUSCRIPT_DIR;
     }
 
     public function getRenderPath()
     {
-        return self::REPO . '/' . $this->dir . '/' . self::RENDER_DIR;
+        return BOOKS_REPO . '/' . $this->dir . '/' . BOOKS_RENDER_DIR;
     }
 
     public function getRenderFilename()
@@ -50,14 +49,13 @@ class Book extends Eloquent {
 
     public function getImagesPath()
     {
-        return $this->getManuscriptPath() . '/' . self::IMAGES_DIR;
+        return $this->getManuscriptPath() . '/' . BOOKS_IMAGES_DIR;
     }
     
     public function getCoverFilename()
     {
-        return self::COVER_FILENAME;
+        return BOOKS_COVER_FILENAME;
     }
-
 
     public function save()
     {
@@ -68,22 +66,22 @@ class Book extends Eloquent {
             return false;
         }
 
-        $filesystem = new Filesystem(new Adapter(self::REPO));
+        $filesystem = new Filesystem(new Adapter(BOOKS_REPO));
 
-        // creates the MANUSCRIPT_DIR
-        if (!$filesystem->createDir($this->dir . '/' . self::MANUSCRIPT_DIR)) {
+        // creates the BOOKS_MANUSCRIPT_DIR
+        if (!$filesystem->createDir($this->dir . '/' . BOOKS_MANUSCRIPT_DIR)) {
             return false;
         }
 
         // creates the images dir
-        $filesystem->createDir($this->dir . '/' . self::MANUSCRIPT_DIR . '/images');
+        $filesystem->createDir($this->dir . '/' . BOOKS_MANUSCRIPT_DIR . '/images');
 
         // adds some basic files
         $filesystem->put($this->dir . '/' . 'README.md', '');
         $filesystem->put($this->dir . '/' . 'license.md', '');
 
-        // creates the RENDER_DIR
-        if (!$filesystem->createDir($this->dir . '/' . self::RENDER_DIR)) {
+        // creates the BOOKS_RENDER_DIR
+        if (!$filesystem->createDir($this->dir . '/' . BOOKS_RENDER_DIR)) {
             return false;
         }
 
@@ -116,7 +114,7 @@ class Book extends Eloquent {
         //     $fragment->delete();
         // }
 
-        $filesystem = new Filesystem(new Adapter(self::REPO));
+        $filesystem = new Filesystem(new Adapter(BOOKS_REPO));
         $filesystem->deleteDir($this->dir);
 
         return parent::delete();
@@ -133,10 +131,10 @@ class Book extends Eloquent {
         }
 
         //TODO flysystem lacks a rename dir method
-        //$filesystem = new Filesystem(new Adapter(self::REPO));
+        //$filesystem = new Filesystem(new Adapter(BOOKS_REPO));
         //$filesystem->rename($old_name, $this->dir);
 
-        rename(self::REPO . '/' . $old_name, self::REPO . '/' . $this->dir);
+        rename(BOOKS_REPO . '/' . $old_name, BOOKS_REPO . '/' . $this->dir);
 
         return parent::save();
     }
@@ -283,7 +281,7 @@ class Book extends Eloquent {
         return $filesystem->write('Book.txt', $index);
     }
 
-    public function getRenderInfo()
+    public function getRenderInfo($return_content=false)
     {
         $filesystem = new Filesystem(new Adapter($this->getRenderPath()));
 
@@ -293,6 +291,10 @@ class Book extends Eloquent {
             $return['filepath'] = $this->getRenderPath() . '/' . $this->getRenderFilename();
             $unixTime = \DateTime::createFromFormat('U', $filesystem->getTimestamp($this->getRenderFilename()));
             $return['created'] = $unixTime->format('D, Y-m-d H:i:s');
+
+            if ($return_content) {
+                $return['content'] = $filesystem->read($this->getRenderFilename());
+            }
         }
 
         $filesystem = new Filesystem(new Adapter($this->getImagesPath()));
@@ -300,6 +302,7 @@ class Book extends Eloquent {
             $return['coverpath'] = $this->getImagesPath() . '/' . $this->getCoverFilename();
         }
         
+
         return count($return) ? $return : false;
     }
 }

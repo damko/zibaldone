@@ -8,11 +8,9 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local as Adapter;
 use Parsedown as MarkdownParser;
-//use League\CommonMark\CommonMarkConverter as MarkdownParser;
 
 class Article extends Eloquent {
 
-    const REPO = '../articles';
     protected $database = 'zibaldone';
     protected $table = 'articles';
     protected $connection = 'mysql';
@@ -36,7 +34,7 @@ class Article extends Eloquent {
 
         $allowed_exts = array('txt', 'md');
 
-        $filesystem = new Filesystem(new Adapter(self::REPO));
+        $filesystem = new Filesystem(new Adapter(ARTICLES_REPO));
 
         foreach ($filesystem->listContents() as $item) {
 
@@ -117,7 +115,7 @@ class Article extends Eloquent {
     }
 
     public function getContent(){
-    	$filesystem = new Filesystem(new Adapter(self::REPO));
+    	$filesystem = new Filesystem(new Adapter(ARTICLES_REPO));
     	return $filesystem->read($this->full_filename);
     }
 

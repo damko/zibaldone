@@ -1,5 +1,6 @@
 'use strict';
 
+
 /* Controllers */
 
 zibaldoneApp.controller('navbarCtrl', ['$scope', '$location', function($scope, $location) {
@@ -46,16 +47,16 @@ zibaldoneApp.controller('ModalArticleCtrl', function($scope, $modalInstance, $sc
 
 });
 
-zibaldoneApp.controller('articlesCtrl', ['$scope', 'ArticlesAPI', 'ArticleAPI', 'Alerts', '$modal', function($scope, ArticlesAPI, ArticleAPI, Alerts, $modal) {
+zibaldoneApp.controller('articlesCtrl', ['$scope', 'ArticlesAPI', 'ArticleAPI', 'Alerts', '$modal', '$window', function($scope, ArticlesAPI, ArticleAPI, Alerts, $modal, $window) {
 
     $scope.ArticlesAPI = ArticlesAPI.list();
     $scope.articleTitle = '';
     $scope.articleContent = '';
     $scope.articleTags = [];
 
-    $scope.open = function (size){
+    $scope.openModal = function (size){
 
-        console.log($scope.articleTags);
+        //console.log($scope.articleTags);
 
         var modalInstance = $modal.open({
             templateUrl: '/partials/article_modal.html',
@@ -75,20 +76,36 @@ zibaldoneApp.controller('articlesCtrl', ['$scope', 'ArticlesAPI', 'ArticleAPI', 
         });
     };
 
-    $scope.showArticle = function(articleId, title) {
+    // opens the article in a modal window
+    $scope.showModalArticle = function(articleId, title) {
         
         $scope.articleTitle = title;
 
         ArticleAPI.get({articleId: articleId}, function(response){
-            // console.log('Tags');
-            // console.log(response.results.tags);
+            // console.log('Article');
+            // console.log(response.results.article);
             $scope.articleContent = response.results.article;
             $scope.articleTags = response.results.tags;
-            $scope.open('lg');
+            $scope.openModal('lg');
         });
 
     }
 
+    $scope.open = function (content){
+        $scope.window = $window.open("/#",'_blank');
+        $scope.window.document.write(content);
+    };
+
+    // opens the article in a new tab
+    $scope.showArticle = function(articleId, title) {
+
+        ArticleAPI.get({articleId: articleId}, function(response){
+            // console.log('Article');
+            // console.log(response.results.article);
+            $scope.open(response.results.article);
+        });
+
+    }
 }]);
 
 zibaldoneApp.controller('tagsCtrl', ['$scope', 'TagsAPI', 'Alerts', function($scope, TagsAPI, Alerts) {
@@ -99,9 +116,10 @@ zibaldoneApp.controller('tagsCtrl', ['$scope', 'TagsAPI', 'Alerts', function($sc
 
 
 
-zibaldoneApp.controller('booksCtrl', ['$scope', 'BooksAPI', 'BookAPI', 'Alerts', '$modal', function($scope, BooksAPI, BookAPI, Alerts, $modal) {
+zibaldoneApp.controller('booksCtrl', ['$scope', 'BooksAPI', 'BookAPI', 'Alerts', '$window', function($scope, BooksAPI, BookAPI, Alerts, $window) {
 
     $scope.BooksAPI = BooksAPI.list();
+
 
     $scope.refreshBookList = function(){
         $scope.BooksAPI = BooksAPI.list();
@@ -149,11 +167,17 @@ zibaldoneApp.controller('booksCtrl', ['$scope', 'BooksAPI', 'BookAPI', 'Alerts',
         });
     }
 
-    //TODO I need to improve this whole thing
-    $scope.showBook = function (template){
-        var modalInstance = $modal.open({
-            templateUrl: template,
-            size: 'lg',
+    $scope.open = function (content){
+        $scope.window = $window.open("/#",'_blank');
+        $scope.window.document.write(content);
+    };
+
+    $scope.showBook = function (bookId){
+
+        BookAPI.get({bookId: bookId}, function(response){
+            // console.log('Book');
+            // console.log(response.results.book);
+            $scope.open(response.results.book.render.content);
         });
     };
 }]);

@@ -83,6 +83,15 @@ class Zibaldone extends Slim {
 
         $this->error_messages[60] = 'The resource already exists';
 
+        $config_file = ROOT_DIR . '/config/config-default.php';
+        $user_config_file = ROOT_DIR . '/config/config.php';
+
+        if (file_exists($user_config_file)) {
+            $config_file = $user_config_file;
+        }
+
+        include $config_file;
+
         return parent::__construct($slim_params);
     }
 
@@ -156,7 +165,7 @@ class Zibaldone extends Slim {
         }
 
         // adds info about rendering
-        $book->render = $book->getRenderInfo();
+        $book->render = $book->getRenderInfo(true);
 
         $this->results['book'] = $book->toArray();
     }
