@@ -33,12 +33,27 @@
             animation: none !important;
         }
 
-    h1,h2,h3,h4,h5,h6
+    h1
     {
-        font-weight: 700;
+        font-weight: 800;
+        color: #484d55;
+        margin-bottom: 1em;
+    }
+
+    h2
+    {
+        margin-top: 1.5em;
+        font-weight: 650;
         color: #484d55;
     }
-    
+
+    h3,h4,h5,h6
+    {
+        margin-top: 1.5em;
+        font-weight: 550;
+        color: #484d55;
+    }
+
     h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
     {
         color: inherit;
@@ -56,14 +71,14 @@
         transition: color .25s ease-in-out;
     }
     
-        a:hover
-        {
-            text-decoration: none;
-        }
+    a:hover
+    {
+        text-decoration: none;
+    }
 
     strong, b
     {
-        font-weight: 700;
+        font-weight: 800;
         color: #484d55;
     }
     
@@ -111,10 +126,16 @@
     
     p, ul, ol, dl, table, blockquote, form
     {
-        margin-bottom: 2em;
+        /*margin-bottom: 1.5em;*/
         color: #444;
     }
-    
+
+    ul
+    {
+        margin-top: 0.5em;
+        margin-bottom: 1em;
+    }
+
     /* dam */
     p.render_string {
         font-size: 12px;
