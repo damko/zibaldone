@@ -26,10 +26,6 @@
                         </a>
 
                         <p class="render_string">Last render: {{book.render.created}}</p>
-<!--  
-                        <button type="button" class="button style3" ng-click="showBook(book.render.filepath)">Show</button>
-                        <a class="button style3" href="{{book.render.filepath}}" target="_blank">New tab</a> 
- -->
 
                     </div>
 
@@ -64,21 +60,14 @@
             <div class="3u" ng-repeat="article in ArticlesAPI.results.articles" style="min-height: 340px;">
                 <section class="box article">
 
-                    <!-- <a href="#" ng-click="showModalArticle(article.id, article.title)"> -->
-                        <!-- <h3 class="article">{{article.title | limitTo: 18}} {{article.title.length > 18 ? '[..]' : ''}}</h3> -->
-                        <h3 class="article">{{article.title}}</h3>
-                    <!-- </a> -->
-                    
+                    <h3 class="article">{{article.title | limitTo: 18}} {{article.title.length > 18 ? '[..]' : ''}}</h3>
+
                     <div ng-if="article.thumbnail">
-                        <!-- <a href="#" ng-click="showModalArticle(article.id, article.title)"> -->
-                            <img class="image article" ng-src="{{article.thumbnail}}" alt="" />
-                        <!-- </a> -->
+                        <img class="image article" ng-src="{{article.thumbnail}}" alt="" />
                     </div>
 
                     <div ng-if="!article.thumbnail">
-                        <!-- <a href="#" ng-click="showModalArticle(article.id, article.title)"> -->
-                            <img class="image article" src="assets/images/default_article.png" alt="" />
-                        <!-- </a> -->
+                        <img class="image article" src="assets/images/default_article.png" alt="" />
                     </div>
 
                     <ul class="tagslist" ng-if="article.tags.length">    
@@ -88,7 +77,6 @@
                     <div>
                         <button type="button" class="btn btn-primary btn-xs" style="float: right;" ng-click="showArticle(article.id, article.title)">New Tab</button>
                         <button type="button" class="btn btn-primary btn-xs" ng-click="showModalArticle(article.id, article.title)">Modal</button>
-                        <div style="clear: both;"></div>
                     </div>
 
                 </section>
