@@ -16,21 +16,20 @@
                     
                     <div ng-if="book.render.filepath">
 
-                        <!-- <a href="{{book.render.filepath}}" class="image featured" target="_blank"> -->
                         <a href="#" ng-click="showBook(book.id)" class="image featured">
-<!--                             <span ng-if="book.render.coverpath">
+                            <span ng-if="book.render.coverpath">
                                 <img ng-src="{{book.render.coverpath}}" alt="" />
                             </span>
- -->                            <span ng-if="!book.render.coverpath">
+                            <span ng-if="!book.render.coverpath">
                                 <img src="assets/images/default_cover.png" alt="" />
                             </span>
                         </a>
 
                         <p class="render_string">Last render: {{book.render.created}}</p>
-<!-- 
+<!--  
                         <button type="button" class="button style3" ng-click="showBook(book.render.filepath)">Show</button>
                         <a class="button style3" href="{{book.render.filepath}}" target="_blank">New tab</a> 
--->
+ -->
 
                     </div>
 
