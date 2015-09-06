@@ -11,15 +11,22 @@
                 <section class="box">
 
                     <span ng-if="book.render.coverpath">
-                        <img class="image featured" src="{{book.render.coverpath}}" alt="cover" />
+                        <a ng-if="book.render.filepath" ng-click="showBook(book.id)" style="cursor: pointer">
+                            <img class="image featured" src="{{book.render.coverpath}}" alt="cover" />
+                        </a>
                     </span>
 
                     <span ng-if="!book.render.coverpath">
-                        <img class="image featured" src="assets/images/default_cover.png" alt="cover" />
+                        <a ng-if="book.render.filepath" ng-click="showBook(book.id)" style="cursor: pointer">
+                            <img class="image featured" src="assets/images/default_cover.png" alt="cover" />
+                        </a>
+
+                        <img ng-if="! book.render.filepath" class="image featured" src="assets/images/default_cover.png" alt="cover" />
                     </span>
 
-                    <h3 style="margin-top: -20px;">{{book.title | limitTo: 24}}  {{book.title.length > 24 ? '[..]' : ''}}</h3>
+                    <h3 style="margin-top: -20px; margin-bottom: 0px;">{{book.title | limitTo: 24}}  {{book.title.length > 24 ? '[..]' : ''}}</h3>
 
+<!--                     
                     <div ng-if="book.render.filepath">
                         <p class="render_string">
                             <span>
@@ -27,6 +34,10 @@
                                 {{book.render.created}}
                             </span>
                         </p>
+                    </div> -->
+
+                    <div ng-if="book.render.filepath">
+                        <p class="render_string">{{book.render.created}}</p>
                     </div>
 
                     <div ng-if="! book.render.filepath">
