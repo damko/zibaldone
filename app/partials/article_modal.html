@@ -10,14 +10,17 @@
     <!-- Optional theme -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"> -->
 
-	<style>
-		body {
-			width: 100%;
-		}
-		img {
-			max-width: 860px;
-		}
-	</style>
+<!--
+    <style>
+        body {
+            width: 100%;
+        }
+        img {
+            max-width: 860px;
+        }
+    </style>
+-->
+
 </head>
 <body>
     <div ng-if="articleTags.length" style="margin-top: 15px;">
@@ -28,10 +31,10 @@
 
     <div ng-if="articleTags.length==0">No tags</div>
 
-	<div class="modal-body" ng-bind-html="articleContent">
-	</div>
-	<div class="modal-footer">
-	    <button class="btn btn-warning" ng-click="close()">Close</button>
-	</div>
+    <div class="modal-body" ng-bind-html="articleContent">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="close()">Close</button>
+    </div>
 </body>
 </html>

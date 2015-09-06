@@ -182,6 +182,4 @@ $zibaldone->get('/tags', function () use ($zibaldone) {
     $zibaldone->output();
 });
 
-
-
 $zibaldone->run();
