@@ -10,27 +10,26 @@
             <div class="3u" ng-repeat="book in BooksAPI.results.books" style="min-height: 400px;">
                 <section class="box">
 
-                    <header>
-                        <h3>{{book.title}}</h3>
-                    </header>
-                    
+                    <span ng-if="book.render.coverpath">
+                        <img class="image featured" src="{{book.render.coverpath}}" alt="cover" />
+                    </span>
+
+                    <span ng-if="!book.render.coverpath">
+                        <img class="image featured" src="assets/images/default_cover.png" alt="cover" />
+                    </span>
+
+                    <h3 style="margin-top: -20px;">{{book.title | limitTo: 24}}  {{book.title.length > 24 ? '[..]' : ''}}</h3>
+
                     <div ng-if="book.render.filepath">
-
-                        <a href="#" ng-click="showBook(book.id)" class="image featured">
-                            <span ng-if="book.render.coverpath">
-                                <img ng-src="{{book.render.coverpath}}" alt="" />
+                        <p class="render_string">
+                            <span>
+                                <button type="button" class="btn btn-primary btn-xs" style="float: right;" ng-click="showBook(book.id)">New Tab</button>
+                                {{book.render.created}}
                             </span>
-                            <span ng-if="!book.render.coverpath">
-                                <img src="assets/images/default_cover.png" alt="" />
-                            </span>
-                        </a>
-
-                        <p class="render_string">Last render: {{book.render.created}}</p>
-
+                        </p>
                     </div>
 
                     <div ng-if="! book.render.filepath">
-                        <img class="image featured" src="assets/images/default_cover.png" alt="" />
                         <p class="render_string">No render for this book yet</p>
                     </div>
 

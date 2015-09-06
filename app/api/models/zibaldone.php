@@ -147,7 +147,7 @@ class Zibaldone extends Slim {
         $this->results['books'] = array();
 
         foreach (Book::all() as $book) {
-            $book->render = $book->getRenderInfo();    
+            $book->render = $book->getRenderInfo();
             $this->results['books'][] = $book->toArray();
         }
     }

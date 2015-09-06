@@ -300,6 +300,7 @@ class Book extends Eloquent {
         $filesystem = new Filesystem(new Adapter($this->getImagesPath()));
         if ($filesystem->has($this->getCoverFilename())) {
             $return['coverpath'] = $this->getImagesPath() . '/' . $this->getCoverFilename();
+            //$return['cover_base64'] = base64_encode(file_get_contents($this->getImagesPath() . '/' . $this->getCoverFilename()));
         }
         
 
