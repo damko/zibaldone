@@ -22,3 +22,4 @@ content
 .buildpath
 html5up-escape-velocity.zip
 zibaldone_last.sql
+app/api/models/zibaldone.php
