@@ -138,7 +138,7 @@
 
     /* dam */
     p.render_string {
-        font-size: 12px;
+        font-size: 14px;
         margin-top: 0px;
         margin-bottom: 10px;
     }
@@ -167,7 +167,9 @@
     ul.tagslist {
         line-height: 25px;
         margin: 0;
-        margin-bottom: 8px;
+    	margin-top: 5px;
+        margin-bottom: 15px;
+    	text-align: center;
     }
 
     ul.tagslist li {
@@ -177,7 +179,7 @@
         margin-right: 5px;
         color: black;
         background-color: #e8e8e8;
-        font-size: 12px;
+        font-size: 11px;
         padding-top: 0px;
         padding-bottom: 2px;
         padding-left: 5px;
@@ -189,15 +191,22 @@
               border-radius: 4px 4px 4px 4px;
     }
 
-    section.article {
+    section.article, section.book {
         padding: 5px;
         border: 1px solid #c8c8c8;
         -webkit-border-radius: 4px 4px 4px 4px;
          -moz-border-radius: 4px 4px 4px 4px;
               border-radius: 4px 4px 4px 4px;
-        height: 300px;
     }
-
+    
+	section.book {
+		height: 300px;
+	}
+	
+    section.article {
+		height: 335px;
+    }
+    
     section.article a {
         text-decoration: none;
     }
@@ -457,8 +466,9 @@
             {
                 display: block;
                 width: 100%;
-                margin: 0 0 2em 0;
-                border: 1px solid #e8e8e8;
+            	heigth: 100%;
+                margin: 0 0 10px 0;
+                /*border: 1px solid #e8e8e8;*/
             }
 
     /* Button */

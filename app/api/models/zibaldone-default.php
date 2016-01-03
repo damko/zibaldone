@@ -58,8 +58,6 @@ class Zibaldone extends Slim
     public function __construct(array $slim_params)
     {
         $capsule = new Capsule();
-        
-        //TODO move this in some config file
         $settings = array(
             'driver' => 'mysql',
             'host' => 'localhost',

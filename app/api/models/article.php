@@ -108,10 +108,14 @@ class Article extends Eloquent {
 
     public static function list_all() 
     {
+        $articles = array();
+     
         // implements Eloquent Lazy Loading to retrieve the articles and the tags
-        //$articles = self::all()->take(2);
-        $articles = self::all();
-        return $articles->load('tags')->toArray();
+        foreach (self::all()->sortBy(function($article){return $article->title;}) as $article) {
+            $articles[] = $article->load('tags')->toArray();
+        }
+        
+        return $articles;
     }
 
     public function getContent(){

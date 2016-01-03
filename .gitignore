@@ -17,7 +17,7 @@ extra/
 app/api/config/config.php
 zibaldone.php
 content
-.settings
+.project
+.settings/
 .buildpath
-.project	
 html5up-escape-velocity.zip

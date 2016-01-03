@@ -7,41 +7,30 @@
 
         <div class="row 150%" ng-controller="booksCtrl">
 
-            <div class="3u" ng-repeat="book in BooksAPI.results.books" style="min-height: 400px;">
-                <section class="box">
+            <div class="3u" ng-repeat="book in BooksAPI.results.books" style="min-height: 350px;">
 
-                    <span ng-if="book.render.coverpath">
-                        <a ng-if="book.render.filepath" ng-click="showBook(book.id)" style="cursor: pointer">
-                            <img class="image featured" src="{{book.render.coverpath}}" alt="cover" />
-                        </a>
-                    </span>
+                <section class="box book">
 
-                    <span ng-if="!book.render.coverpath">
-                        <a ng-if="book.render.filepath" ng-click="showBook(book.id)" style="cursor: pointer">
-                            <img class="image featured" src="assets/images/default_cover.png" alt="cover" />
-                        </a>
-
-                        <img ng-if="! book.render.filepath" class="image featured" src="assets/images/default_cover.png" alt="cover" />
-                    </span>
-
-                    <h3 style="margin-top: -20px; margin-bottom: 0px;">{{book.title | limitTo: 24}}  {{book.title.length > 24 ? '[..]' : ''}}</h3>
-
-<!--                     
-                    <div ng-if="book.render.filepath">
-                        <p class="render_string">
-                            <span>
-                                <button type="button" class="btn btn-primary btn-xs" style="float: right;" ng-click="showBook(book.id)">New Tab</button>
-                                {{book.render.created}}
-                            </span>
-                        </p>
-                    </div> -->
-
-                    <div ng-if="book.render.filepath">
-                        <p class="render_string">{{book.render.created}}</p>
-                    </div>
-
-                    <div ng-if="! book.render.filepath">
-                        <p class="render_string">No render for this book yet</p>
+            		<div style="margin:0; padding:0;">					
+	                    <span ng-if="book.render.cover_type == 'custom'">
+	                        <a ng-click="showBook(book.id)" style="cursor: pointer">
+	                            <img class="image featured" src="data:image/png;base64,{{book.render.cover_base64}}" alt="cover" />
+	                        </a>
+	                    </span>
+                    
+	                    <span ng-if="book.render.cover_type == 'default'">
+	                    	<h3 style="margin: 0px; height: 45px; text-align: center;">{{book.title | limitTo: 40}}  {{book.title.length > 40 ? '[..]' : ''}}</h3>
+	
+	                        <a ng-click="showBook(book.id)" style="cursor: pointer">
+	                            <img class="image featured" style="height: 200px;" src="assets/images/default_cover.png" alt="cover" />
+	                        </a>
+	                        
+	                    </span>
+					</div>
+					
+					<div>
+						<p ng-if="book.render.filepath" class="render_string" style="text-align: center;">{{book.render.created}}</p>
+						<p ng-if="! book.render.filepath"class="render_string">No render for this book yet</p>
                     </div>
 
                 </section>
@@ -70,7 +59,7 @@
             <div class="3u" ng-repeat="article in ArticlesAPI.results.articles" style="min-height: 340px;">
                 <section class="box article">
 
-                    <h3 class="article">{{article.title | limitTo: 18}} {{article.title.length > 18 ? '[..]' : ''}}</h3>
+                    <h3 class="article" style="text-align: center; height: 40px;">{{article.title | limitTo: 40}} {{article.title.length > 40 ? '[..]' : ''}}</h3>
 
                     <div ng-if="article.thumbnail">
                         <img class="image article" ng-src="{{article.thumbnail}}" alt="" />
