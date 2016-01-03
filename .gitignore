@@ -15,4 +15,9 @@ package.json
 *.sublime-workspace
 extra/
 app/api/config/config.php
-app/content
+zibaldone.php
+content
+.settings
+.buildpath
+.project	
+html5up-escape-velocity.zip
