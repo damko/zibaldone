@@ -63,7 +63,7 @@ class Zibaldone extends Slim
             'host' => 'localhost',
             'database' => 'zibaldone',
             'username' => 'zibaldone',
-            'password' => 't0rvalds',
+            'password' => 'password',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => ''
